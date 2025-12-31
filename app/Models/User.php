@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\UsesSchemaTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +14,7 @@ use MrThito\LaravelStripeConnect\Traits\Payable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, Payable, SoftDeletes;
+    use HasFactory, Notifiable, Payable, SoftDeletes, UsesSchemaTable;
 
     /**
      * The attributes that are mass assignable.

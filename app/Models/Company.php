@@ -99,6 +99,12 @@ class Company extends Model
 
     /**
      * Get the user that owns the company.
+     * 
+     * Note: This relationship does not have a database foreign key constraint
+     * because users are stored in tenant schemas (e.g., "schema_name"."users")
+     * while companies are stored in the public schema. PostgreSQL doesn't
+     * allow foreign key constraints across different schemas.
+     * The relationship is enforced in application code.
      */
     public function user(): BelongsTo
     {

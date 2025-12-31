@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('users')) {
+            return;
+        }
+
         Schema::table('users', function (Blueprint $table) {
             $table->string('stripe_account_id')->nullable();
             $table->boolean('stripe_account_active')->default(false);
@@ -26,6 +30,10 @@ return new class extends Migration
      */
     public function down()
     {
+        if (!Schema::hasTable('users')) {
+            return;
+        }
+
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('stripe_account_id', 'stripe_account_active');
         });

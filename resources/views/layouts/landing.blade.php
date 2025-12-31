@@ -77,6 +77,7 @@
 
     <!-- include scripts -->
     <script src="{{ asset('assets/landing/js/uni-core/js/uni-core-bundle.min.js') }}"></script>
+    @stack('styles')
 </head>
 
 <body
@@ -109,26 +110,23 @@
                 </form>
                 <ul class="nav-y gap-narrow fw-medium fs-6" data-uc-nav>
                     <li>
-                        <a href="">Features</a>
+                        <a href="{{ route('c.home') }}">{{ __('Home') }}</a>
                     </li>
                     <li>
-                        <a href="">Pricing</a>
+                        <a href="{{ route('c.pricing') }}">{{ __('Pricing') }}</a>
                     </li>
                     <li>
-                        <a href="">About</a>
+                        <a href="{{ route('c.about') }}">{{ __('About') }}</a>
                     </li>
                     <li>
-                        <a href="">Career</a>
-                    </li>
-                    <li>
-                        <a href="">Contact</a>
+                        <a href="{{ route('c.contact') }}">{{ __('Contact') }}</a>
                     </li>
                     <li class="hr opacity-10 my-1"></li>
                     <li>
-                        <a href="">Create an account</a>
+                        <a href="{{ route('c.register') }}">{{ __('Create an account') }}</a>
                     </li>
                     <li>
-                        <a href="">Log in</a>
+                        <a href="{{ route('c.login') }}">{{ __('Log in') }}</a>
                     </li>
                 </ul>
                 <ul class="social-icons nav-x mt-4">
@@ -164,9 +162,10 @@
     </div>
 
     <!-- Header start -->
-    <header class="uc-header header-default uc-navbar-sticky-wrap z-999 " style="--uc-nav-height: 80px"
+    <header class="uc-header header-default uc-navbar-sticky-wrap z-999 uc-sticky uc-navbar-transparent"
+        style="--uc-nav-height: 80px"
         data-uc-sticky="start: 100vh; show-on-up: true; animation: uc-animation-slide-top; sel-target: .uc-navbar-container; cls-active: uc-navbar-sticky; cls-inactive: uc-navbar-transparent; end: !*;">
-        <nav class="uc-navbar-container uc-navbar-float ft-tertiary z-1"
+        <nav class="uc-navbar-container ft-tertiary z-1 {{ $sticky ? 'uc-navbar-float' : 'uc-navbar-sticky uc-navbar-transparent' }}"
             data-anime="translateY: [-40, 0]; opacity: [0, 1]; easing: easeOutExpo; duration: 750; delay: 0;">
             <div class="container max-w-xl">
                 <div class="uc-navbar min-h-64px lg:min-h-80px text-gray-900 dark:text-white"
@@ -184,22 +183,22 @@
                         </div>
                         <ul class="uc-navbar-nav gap-3 xl:gap-4 d-none lg:d-flex fw-medium ms-2">
                             <li>
-                                <a href="{{ route('home') }}">
+                                <a href="{{ route('c.home') }}">
                                     {{ __('Home') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('home') }}">
+                                <a href="{{ route('c.about') }}">
                                     {{ __('About') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('home') }}">
+                                <a href="{{ route('c.pricing') }}">
                                     {{ __('Pricing') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('home') }}">
+                                <a href="{{ route('c.contact') }}">
                                     {{ __('Contact') }}
                                 </a>
                             </li>
@@ -207,11 +206,11 @@
                     </div>
                     <div class="uc-navbar-right">
                         <div class="d-none lg:d-block">
-                            <a class="text-none fw-medium" href="">
+                            <a class="text-none fw-medium" href="{{ route('c.login') }}">
                                 <span>Log in</span>
                             </a>
                         </div>
-                        <a class="btn btn-sm btn-primary text-white text-none d-none lg:d-inline-flex" href="">
+                        <a class="btn btn-sm btn-primary text-white text-none d-none lg:d-inline-flex" href="{{ route('c.register') }}">
                             Start free trial
                         </a>
                         <a class="d-block lg:d-none" href="#uc-menu-panel" data-uc-navbar-toggle-icon
@@ -387,6 +386,8 @@
 
     <script defer src="{{ asset('assets/landing/js/form.js') }}"></script>
     <script defer src="{{ asset('assets/landing/js/app.js') }}"></script>
+
+    @stack('scripts')
 
     <script>
         const queryString = window.location.search;

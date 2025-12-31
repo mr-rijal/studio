@@ -79,10 +79,10 @@
                                 program with the industry's top class management software.
                             </p>
                             <div class="vstack sm:hstack justify-center gap-1 lg:gap-2 mt-1 sm:mt-2">
-                                <a href="{{ route('home') }}" class="btn btn-md lg:btn-lg btn-primary text-white">
+                                <a href="{{ route('c.register') }}" class="btn btn-md lg:btn-lg btn-primary text-white">
                                     {{ __('Start free trial') }}
                                 </a>
-                                <a href="{{ route('home') }}"
+                                <a href="{{ route('c.register') }}"
                                     class="btn btn-md lg:btn-lg dark:text-white border-gray-900 dark:border-white border-opacity-20 hover:border-opacity-40"
                                     data-uc-toggle>
                                     {{ __('Request a demo') }}

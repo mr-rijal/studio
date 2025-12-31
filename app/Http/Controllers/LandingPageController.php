@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
@@ -53,7 +52,7 @@ class LandingPageController extends Controller
         ]);
 
         // Generate a company registration token for the user
-        $token = new CompanyRegistrationToken();
+        $token = new CompanyRegistrationToken;
         $token->first_name = $request->first_name;
         $token->last_name = $request->last_name;
         $token->email = $request->email;
@@ -84,7 +83,7 @@ class LandingPageController extends Controller
     public function completeRegistration($token)
     {
         $token = CompanyRegistrationToken::where('token', $token)->first();
-        if (!$token) {
+        if (! $token) {
             return redirect()->route('c.home')->with('error', 'Invalid token');
         }
 
@@ -104,17 +103,17 @@ class LandingPageController extends Controller
         ]);
 
         $token = CompanyRegistrationToken::where('token', $token)->first();
-        if (!$token) {
+        if (! $token) {
             return redirect()->route('c.home')->with('error', 'Invalid token');
         }
 
         // create schema for the company
         $companySchema = CompanySchema::create([
             'name' => $request->name,
-            'schema_name' => 'lancraft_' . Str::slug($request->name),
+            'schema_name' => 'lancraft_'.Str::slug($request->name),
         ]);
         // update schema name with id
-        $companySchema->schema_name = 'lancraft_' . $companySchema->id;
+        $companySchema->schema_name = 'lancraft_'.$companySchema->id;
         $companySchema->save();
         SchemaHelper::createSchema($companySchema->schema_name);
         SchemaHelper::migrateTable($companySchema->schema_name);
@@ -151,7 +150,7 @@ class LandingPageController extends Controller
         // create domain
         $domain = Domain::create([
             'company_id' => $company->id,
-            'domain' => $request->subdomain . '.lancraft.test',
+            'domain' => $request->subdomain.'.lancraft.test',
             'primary' => true,
             'status' => true,
         ]);
@@ -159,6 +158,6 @@ class LandingPageController extends Controller
         // delete token
         $token->delete();
 
-        return redirect()->to('//' . $domain->domain);
+        return redirect()->to('//'.$domain->domain);
     }
 }

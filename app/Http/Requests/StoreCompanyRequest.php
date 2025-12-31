@@ -82,7 +82,7 @@ class StoreCompanyRequest extends FormRequest
         $validator->after(function ($validator) {
             $domains = $this->input('domains', []);
 
-            if (!empty($domains)) {
+            if (! empty($domains)) {
                 $primaryCount = 0;
                 foreach ($domains as $index => $domain) {
                     if (isset($domain['primary']) && $domain['primary']) {

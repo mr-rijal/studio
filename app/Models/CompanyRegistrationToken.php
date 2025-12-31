@@ -24,6 +24,7 @@ class CompanyRegistrationToken extends Model
         $this->token = Str::random(32);
         $this->expires_at = now()->addHours(24);
         $this->save();
+
         return $this->token;
     }
 

@@ -7,7 +7,6 @@ use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\StoreSubscriptionTransactionRequest;
 use App\Http\Requests\UpdateSubscriptionRequest;
 use App\Models\Company;
-use App\Models\Plan;
 use App\Models\Subscription;
 use App\Services\SubscriptionService;
 use Illuminate\Http\JsonResponse;

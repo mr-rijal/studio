@@ -14,7 +14,7 @@ class SchemaHelper
     public static function createSchema(string $schema): void
     {
         // Escape schema name for PostgreSQL (use double quotes for identifiers)
-        $quotedSchema = '"' . str_replace('"', '""', $schema) . '"';
+        $quotedSchema = '"'.str_replace('"', '""', $schema).'"';
 
         try {
             DB::statement("CREATE SCHEMA IF NOT EXISTS {$quotedSchema}");
@@ -30,7 +30,7 @@ class SchemaHelper
     public static function migrateTable(string $schema): void
     {
         // Set the search_path to the schema for PostgreSQL
-        $quotedSchema = '"' . str_replace('"', '""', $schema) . '"';
+        $quotedSchema = '"'.str_replace('"', '""', $schema).'"';
 
         try {
             // Set search_path to the schema
@@ -66,10 +66,10 @@ class SchemaHelper
             DB::purge('pgsql');
 
             // Reset search_path to default (public)
-            DB::statement("SET search_path TO public");
+            DB::statement('SET search_path TO public');
         } catch (\Exception $e) {
             // Reset search_path to default on error
-            DB::statement("SET search_path TO public");
+            DB::statement('SET search_path TO public');
             throw new \Exception("Failed to migrate tables for schema: {$schema}. Error: {$e->getMessage()}");
         }
     }
@@ -80,7 +80,7 @@ class SchemaHelper
     public static function seedTable(string $schema): void
     {
         // Set the search_path to the schema for PostgreSQL
-        $quotedSchema = '"' . str_replace('"', '""', $schema) . '"';
+        $quotedSchema = '"'.str_replace('"', '""', $schema).'"';
 
         try {
             // Set search_path to the schema
@@ -103,10 +103,10 @@ class SchemaHelper
             DB::purge('pgsql');
 
             // Reset search_path to default (public)
-            DB::statement("SET search_path TO public");
+            DB::statement('SET search_path TO public');
         } catch (\Exception $e) {
             // Reset search_path to default on error
-            DB::statement("SET search_path TO public");
+            DB::statement('SET search_path TO public');
             throw new \Exception("Failed to seed tables for schema: {$schema}. Error: {$e->getMessage()}");
         }
     }

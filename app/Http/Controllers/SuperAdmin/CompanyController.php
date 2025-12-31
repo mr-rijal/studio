@@ -172,7 +172,7 @@ class CompanyController extends Controller
         }
 
         // Toggle the status
-        $domain->status = !$domain->status;
+        $domain->status = ! $domain->status;
         $domain->save();
 
         return response()->json([

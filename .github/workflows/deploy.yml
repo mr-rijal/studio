@@ -1,0 +1,73 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allow manual deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: http://prashantrijal.com.np
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Laravel Forge Deployment
+        run: |
+          response=$(curl -X POST \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP_CODE:%{http_code}" \
+            "${{ secrets.FORGE_DEPLOY_WEBHOOK_URL }}")
+          
+          http_code=$(echo "$response" | grep "HTTP_CODE:" | cut -d: -f2)
+          
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 201 ]; then
+            echo "✅ Deployment triggered successfully!"
+            echo "🌐 Deploying to: http://prashantrijal.com.np"
+          else
+            echo "❌ Deployment trigger failed with HTTP code: $http_code"
+            exit 1
+          fi
+
+      - name: Wait for Deployment
+        if: success()
+        run: |
+          echo "⏳ Waiting for Laravel Forge to complete deployment..."
+          echo "🌐 Application URL: http://prashantrijal.com.np"
+          echo "📅 Deployed at: $(date)"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo ""
+          echo "💡 You can monitor the deployment progress in your Laravel Forge dashboard."
+          sleep 10
+          
+      - name: Create Deployment Summary
+        if: always()
+        run: |
+          echo "## 🚀 Laravel Forge Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Deployment Details" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Environment** | Production (Laravel Forge) |" >> $GITHUB_STEP_SUMMARY
+          echo "| **URL** | http://prashantrijal.com.np |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Status** | ${{ job.status }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Triggered by** | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ **Deployment triggered successfully!**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Laravel Forge is now deploying your application. Check your Forge dashboard for deployment progress." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Deployment trigger failed!**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please check the logs above and verify your \`FORGE_DEPLOY_WEBHOOK_URL\` secret is correct." >> $GITHUB_STEP_SUMMARY
+          fi
+

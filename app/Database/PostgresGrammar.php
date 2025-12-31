@@ -33,7 +33,7 @@ class PostgresGrammar extends BasePostgresGrammar
 
                 // Quote schema and table separately and return directly
                 // Don't call parent to avoid double-processing or prefix issues
-                return $this->wrapValue($schema) . '.' . $this->wrapValue($tableName);
+                return $this->wrapValue($schema).'.'.$this->wrapValue($tableName);
             }
         }
 

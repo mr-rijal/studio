@@ -26,6 +26,7 @@ class DashboardController extends Controller
         $activeCompaniesDifference = $activeCompanies - Company::where('status', true)->whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
         $totalSubscribersDifference = $totalSubscribers - Subscription::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
         $totalPlansDifference = $totalPlans - Plan::whereMonth('created_at', now()->subMonth()->month)->whereYear('created_at', now()->subMonth()->year)->count();
+
         return view('superadmin.dashboard.index', compact(
             'totalCompanies',
             'totalPlans',

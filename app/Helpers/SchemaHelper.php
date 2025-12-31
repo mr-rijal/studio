@@ -122,5 +122,11 @@ class SchemaHelper
 
         // Clear the connection to apply new config
         DB::purge('pgsql');
+
+        // Re-apply custom grammar after purge
+        $connection = DB::connection('pgsql');
+        if ($connection->getDriverName() === 'pgsql') {
+            $connection->setQueryGrammar(new \App\Database\PostgresGrammar($connection));
+        }
     }
 }

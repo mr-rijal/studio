@@ -8,11 +8,13 @@ use App\Models\Company;
 use App\Models\CompanyRegistrationToken;
 use App\Models\CompanySchema;
 use App\Models\Domain;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class LandingPageController extends Controller
 {
@@ -98,6 +100,7 @@ class LandingPageController extends Controller
             'state' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'zip' => 'required|string|max:255',
+            'subdomain' => 'required|string|max:255',
         ]);
 
         $token = CompanyRegistrationToken::where('token', $token)->first();
@@ -119,10 +122,12 @@ class LandingPageController extends Controller
         SchemaHelper::makeActiveCompany($companySchema->schema_name);
 
         // create user
+        $role = Role::where('guard', 'web')->first();
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
+            'role_id' => $role->id,
+            'first_name' => $token->first_name,
+            'last_name' => $token->last_name,
+            'email' => $token->email,
             'password' => Hash::make(Str::random(10)),
             'status' => true,
         ]);
@@ -146,10 +151,13 @@ class LandingPageController extends Controller
         // create domain
         $domain = Domain::create([
             'company_id' => $company->id,
-            'domain' => $request->name . '.lancraft.test',
+            'domain' => $request->subdomain . '.lancraft.test',
             'primary' => true,
             'status' => true,
         ]);
+
+        // delete token
+        $token->delete();
 
         return redirect()->to('//' . $domain->domain);
     }

@@ -26,11 +26,9 @@ trait UsesSchemaTable
         $schema = Config::get('app.dbschema');
 
         // If schema is set, prepend it to the table name for PostgreSQL
+        // Return unquoted format - Laravel's query builder will handle quoting
         if ($schema) {
-            // Escape schema and table names for PostgreSQL
-            $quotedSchema = '"' . str_replace('"', '""', $schema) . '"';
-            $quotedTable = '"' . str_replace('"', '""', $table) . '"';
-            return "{$quotedSchema}.{$quotedTable}";
+            return "{$schema}.{$table}";
         }
 
         return $table;

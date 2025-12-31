@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8078c81fbb23f3fc37578b2651f04cc5",
+    "content-hash": "9aa418efdc57243ca962b2ef107692c1",
     "packages": [
         {
             "name": "brick/math",
@@ -2123,6 +2123,75 @@
             "time": "2025-03-24T10:02:05+00:00"
         },
         {
+            "name": "mrthito/laravel-stripe-connect",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mrthito/laravel-stripe-connect.git",
+                "reference": "48a407f1a31d0d91532c0693969434f3525e721b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mrthito/laravel-stripe-connect/zipball/48a407f1a31d0d91532c0693969434f3525e721b",
+                "reference": "48a407f1a31d0d91532c0693969434f3525e721b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "stripe/stripe-php": ">=10.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MrThito\\LaravelStripeConnect\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MrThito\\LaravelStripeConnect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rap2h",
+                    "email": "raphaelht@gmail.com"
+                },
+                {
+                    "name": "Simon Hamp",
+                    "email": "simon.hamp@me.com"
+                },
+                {
+                    "name": "Prashant Rijal (MrThito)",
+                    "email": "prashantrijal.721@gmail.com"
+                }
+            ],
+            "keywords": [
+                "billing",
+                "laravel",
+                "stripe"
+            ],
+            "support": {
+                "source": "https://github.com/mrthito/laravel-stripe-connect/tree/1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/MrThito",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-07-27T07:00:40+00:00"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "3.11.0",
             "source": {
@@ -3289,6 +3358,65 @@
                 "source": "https://github.com/ramsey/uuid/tree/4.9.2"
             },
             "time": "2025-12-14T04:43:48+00:00"
+        },
+        {
+            "name": "stripe/stripe-php",
+            "version": "v19.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "4e3de7211645699b1f5b5f1f1b45bd9faf369426"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/4e3de7211645699b1f5b5f1f1b45bd9faf369426",
+                "reference": "4e3de7211645699b1f5b5f1f1b45bd9faf369426",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.72.0",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Stripe\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
+                }
+            ],
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
+            "keywords": [
+                "api",
+                "payment processing",
+                "stripe"
+            ],
+            "support": {
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v19.1.0"
+            },
+            "time": "2025-12-16T19:48:17+00:00"
         },
         {
             "name": "symfony/clock",

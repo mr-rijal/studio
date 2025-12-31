@@ -56,6 +56,12 @@
                                 <span>{{ __('Plans') }}</span>
                             </a>
                         </li>
+                        <li class="{{ request()->routeIs('s.subscriptions.*') ? 'active' : '' }}">
+                            <a href="{{ route('s.subscriptions.index', absolute: false) }}">
+                                <i class="ti ti-credit-card"></i>
+                                <span>{{ __('Subscriptions') }}</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="companies.html">
                                 <i class="ti ti-building-community"></i>

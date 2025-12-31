@@ -6,8 +6,8 @@
                 <h4 class="mb-1">{{ __('Dashboard') }}</h4>
             </div>
             <div class="gap-2 d-flex align-items-center flex-wrap">
-                <a href="{{ route('s.dashboard', absolute: false) }}" class="btn btn-icon btn-outline-light shadow" data-bs-toggle="tooltip"
-                    data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh">
+                <a href="{{ route('s.dashboard', absolute: false) }}" class="btn btn-icon btn-outline-light shadow"
+                    data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh" data-bs-original-title="Refresh">
                     <i class="ti ti-refresh"></i>
                 </a>
                 <a href="javascript:void(0);" class="btn btn-icon btn-outline-light shadow" data-bs-toggle="tooltip"
@@ -23,14 +23,14 @@
                 <div>
                     <h2 class="mb-1 text-white fs-24">Welcome Back, {{ Auth::guard('superadmin')->user()->name }}</h2>
                     <p class="text-light fs-14 mb-0">
-                        {{ __(':number companies registered on :month!', ['number' => 14, 'month' => now()->format('M Y')]) }}
+                        {{ __(':number companies registered on :month!', ['number' => $thisMonthRegisteredCompanies, 'month' => now()->format('M Y')]) }}
                     </p>
                 </div>
                 <div class="d-flex align-items-center flex-wrap gap-2">
-                    <a href="company.html" class="btn btn-danger btn-sm">
+                    <a href="{{ route('s.companies.index', absolute: false) }}" class="btn btn-danger btn-sm">
                         {{ __('All Companies') }}
                     </a>
-                    <a href="packages.html" class="btn btn-light btn-sm">
+                    <a href="{{ route('s.plans.index', absolute: false) }}" class="btn btn-light btn-sm">
                         {{ __('All Plans') }}
                     </a>
                 </div>
@@ -45,10 +45,19 @@
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
                                     <p class="fs-14 mb-1">Total Companies</p>
-                                    <h2 class="mb-1 fs-16">5468</h2>
-                                    <p class="text-success mb-0 fs-13"> <i
-                                            class="ti ti-arrow-bar-up me-1"></i>5.62%<span class="text-body ms-1">from
-                                            last month</span></p>
+                                    <h2 class="mb-1 fs-16">{{ $totalCompanies }}</h2>
+                                    <p
+                                        class="text-{{ $totalCompaniesDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalCompaniesDifference > 0)
+                                            <i class="ti ti-arrow-bar-up me-1"></i>
+                                        @else
+                                            <i class="ti ti-arrow-bar-down me-1"></i>
+                                        @endif
+                                        {{ $totalCompaniesDifference }}%
+                                        <span class="text-body ms-1">
+                                            {{ $totalCompaniesDifference > 0 ? __('from last month') : __('to last month') }}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
@@ -71,10 +80,20 @@
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
-                                    <p class="fs-14 mb-1">Active Companies</p>
-                                    <h2 class="mb-1 fs-16">4598</h2>
-                                    <p class="text-danger mb-0 fs-13"> <i class="ti ti-arrow-bar-down me-1"></i>12%<span
-                                            class="text-body ms-1">from last month</span></p>
+                                    <p class="fs-14 mb-1">{{ __('Active Companies') }}</p>
+                                    <h2 class="mb-1 fs-16">{{ $activeCompanies }}</h2>
+                                    <p
+                                        class="text-{{ $activeCompaniesDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($activeCompaniesDifference > 0)
+                                            <i class="ti ti-arrow-bar-up me-1"></i>
+                                        @else
+                                            <i class="ti ti-arrow-bar-down me-1"></i>
+                                        @endif
+                                        {{ $activeCompaniesDifference }}%
+                                        <span class="text-body ms-1">
+                                            {{ $activeCompaniesDifference > 0 ? __('from last month') : __('to last month') }}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
@@ -97,10 +116,20 @@
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
-                                    <p class="fs-14 mb-1">Total Subscribers</p>
-                                    <h2 class="mb-1 fs-16">5468</h2>
-                                    <p class="text-success mb-0 fs-13"> <i class="ti ti-arrow-bar-up me-1"></i>6%<span
-                                            class="text-body ms-1">from last month</span></p>
+                                    <p class="fs-14 mb-1">{{ __('Total Subscribers') }}</p>
+                                    <h2 class="mb-1 fs-16">{{ $totalSubscribers }}</h2>
+                                    <p
+                                        class="text-{{ $totalSubscribersDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalSubscribersDifference > 0)
+                                            <i class="ti ti-arrow-bar-up me-1"></i>
+                                        @else
+                                            <i class="ti ti-arrow-bar-down me-1"></i>
+                                        @endif
+                                        {{ $totalSubscribersDifference }}%
+                                        <span class="text-body ms-1">
+                                            {{ $totalSubscribersDifference > 0 ? __('from last month') : __('to last month') }}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
@@ -123,10 +152,19 @@
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
-                                    <p class="fs-14 mb-1">Total Earnings</p>
-                                    <h2 class="mb-1 fs-16">$89,878,58</h2>
-                                    <p class="text-danger mb-0 fs-13"> <i class="ti ti-arrow-bar-down me-1"></i>16%<span
-                                            class="text-body ms-1">from last month</span></p>
+                                    <p class="fs-14 mb-1">{{ __('Total Plans') }}</p>
+                                    <h2 class="mb-1 fs-16">{{ $totalPlans }}</h2>
+                                    <p class="text-{{ $totalPlansDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalPlansDifference > 0)
+                                            <i class="ti ti-arrow-bar-up me-1"></i>
+                                        @else
+                                            <i class="ti ti-arrow-bar-down me-1"></i>
+                                        @endif
+                                        {{ $totalPlansDifference }}%
+                                        <span class="text-body ms-1">
+                                            {{ $totalPlansDifference > 0 ? __('from last month') : __('to last month') }}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">

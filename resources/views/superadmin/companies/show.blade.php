@@ -395,6 +395,273 @@
                         @endif
                     </div>
                 </div>
+
+                <!-- Subscriptions Card -->
+                <div class="card border-0 rounded-0">
+                    <div class="card-header border-0 bg-transparent d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">{{ __('Subscriptions') }}</h5>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addSubscriptionModal">
+                            <i class="ti ti-plus me-1"></i>{{ __('Add Subscription') }}
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        @if ($subscriptions->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ __('Plan') }}</th>
+                                            <th>{{ __('Billing Cycle') }}</th>
+                                            <th>{{ __('Amount') }}</th>
+                                            <th>{{ __('Start Date') }}</th>
+                                            <th>{{ __('End Date') }}</th>
+                                            <th>{{ __('Status') }}</th>
+                                            <th>{{ __('Actions') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($subscriptions as $subscription)
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ route('s.plans.show', $subscription->plan) }}"
+                                                        class="text-primary text-decoration-none">
+                                                        {{ $subscription->plan->name }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-light text-dark text-capitalize">
+                                                        {{ $subscription->billing_cycle }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="fw-medium">{{ $subscription->currency }}
+                                                        {{ number_format($subscription->amount, 2) }}</span>
+                                                </td>
+                                                <td>{{ $subscription->start_date->format('d M Y') }}</td>
+                                                <td>{{ $subscription->end_date ? $subscription->end_date->format('d M Y') : '—' }}
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        $badgeClass = match ($subscription->status) {
+                                                            'active' => 'bg-success',
+                                                            'canceled' => 'bg-danger',
+                                                            'expired' => 'bg-secondary',
+                                                            'suspended' => 'bg-warning',
+                                                            'trial' => 'bg-info',
+                                                            default => 'bg-secondary',
+                                                        };
+                                                    @endphp
+                                                    <span class="badge {{ $badgeClass }} text-capitalize">
+                                                        {{ $subscription->status }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <a href="{{ route('s.subscriptions.show', $subscription) }}"
+                                                            class="btn btn-sm btn-light"
+                                                            title="{{ __('View') }}">
+                                                            <i class="ti ti-eye"></i>
+                                                        </a>
+                                                        @if ($subscription->status === 'active')
+                                                            <button type="button" class="btn btn-sm btn-warning"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#cancelSubscriptionModal_{{ $subscription->id }}"
+                                                                title="{{ __('Cancel') }}">
+                                                                <i class="ti ti-x"></i>
+                                                            </button>
+                                                        @endif
+                                                        <a href="#" class="btn btn-sm btn-light text-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete_subscription_{{ $subscription->id }}"
+                                                            title="{{ __('Delete') }}">
+                                                            <i class="ti ti-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Cancel Subscription Modal -->
+                                            @if ($subscription->status === 'active')
+                                                <div class="modal fade"
+                                                    id="cancelSubscriptionModal_{{ $subscription->id }}"
+                                                    tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">
+                                                                    {{ __('Cancel Subscription') }}</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('s.subscriptions.cancel', $subscription) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <p>{{ __('Are you sure you want to cancel this subscription?') }}
+                                                                    </p>
+                                                                    <div class="mb-3">
+                                                                        <label
+                                                                            for="cancel_reason_{{ $subscription->id }}"
+                                                                            class="form-label">{{ __('Reason (optional)') }}</label>
+                                                                        <textarea class="form-control" id="cancel_reason_{{ $subscription->id }}" name="cancel_reason" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-light"
+                                                                        data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-warning">{{ __('Cancel Subscription') }}</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            <!-- Delete Subscription Modal -->
+                                            <div class="modal fade" id="delete_subscription_{{ $subscription->id }}"
+                                                tabindex="-1" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">{{ __('Delete Subscription') }}
+                                                            </h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>{{ __('Are you sure you want to delete this subscription?') }}
+                                                            </p>
+                                                            <p class="mb-0">
+                                                                <strong>{{ $subscription->plan->name }}</strong>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-light"
+                                                                data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                                                            <form
+                                                                action="{{ route('s.subscriptions.destroy', $subscription) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">{{ __('Delete') }}</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <p class="text-muted mb-0">{{ __('No subscriptions found') }}</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Subscription Modal -->
+    <div class="modal fade" id="addSubscriptionModal" tabindex="-1" aria-labelledby="addSubscriptionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSubscriptionModalLabel">{{ __('Add Subscription') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('s.subscriptions.store') }}" method="POST" id="subscriptionForm">
+                    @csrf
+                    <input type="hidden" name="company_id" value="{{ $company->id }}">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="plan_id" class="form-label">{{ __('Plan') }} <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select @error('plan_id') is-invalid @enderror" id="plan_id"
+                                    name="plan_id" required>
+                                    <option value="">{{ __('Select Plan') }}</option>
+                                    @foreach ($plans as $plan)
+                                        <option value="{{ $plan->id }}"
+                                            data-monthly-price="{{ $plan->monthly_price }}"
+                                            data-yearly-price="{{ $plan->yearly_price }}"
+                                            data-currency="{{ $plan->currency }}">
+                                            {{ $plan->name }} ({{ $plan->currency }}
+                                            {{ number_format($plan->monthly_price, 2) }}/mo)
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('plan_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="billing_cycle" class="form-label">{{ __('Billing Cycle') }} <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select @error('billing_cycle') is-invalid @enderror"
+                                    id="billing_cycle" name="billing_cycle" required>
+                                    <option value="monthly">{{ __('Monthly') }}</option>
+                                    <option value="yearly">{{ __('Yearly') }}</option>
+                                </select>
+                                @error('billing_cycle')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="start_date" class="form-label">{{ __('Start Date') }} <span
+                                        class="text-danger">*</span></label>
+                                <input type="date" class="form-control @error('start_date') is-invalid @enderror"
+                                    id="start_date" name="start_date"
+                                    value="{{ old('start_date', date('Y-m-d')) }}" required>
+                                @error('start_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="trial_ends_at" class="form-label">{{ __('Trial Ends At') }}</label>
+                                <input type="date"
+                                    class="form-control @error('trial_ends_at') is-invalid @enderror"
+                                    id="trial_ends_at" name="trial_ends_at" value="{{ old('trial_ends_at') }}">
+                                @error('trial_ends_at')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="status" class="form-label">{{ __('Status') }}</label>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                    name="status">
+                                    <option value="active">{{ __('Active') }}</option>
+                                    <option value="trial">{{ __('Trial') }}</option>
+                                    <option value="suspended">{{ __('Suspended') }}</option>
+                                </select>
+                                @error('status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check mt-4">
+                                    <input class="form-check-input" type="checkbox" id="auto_renew"
+                                        name="auto_renew" value="1" checked>
+                                    <label class="form-check-label" for="auto_renew">
+                                        {{ __('Auto Renew') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-light"
+                            data-bs-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('Create Subscription') }}</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -502,6 +769,26 @@
                             });
                     });
                 });
+
+                // Subscription form handlers
+                const planSelect = document.getElementById('plan_id');
+                const billingCycleSelect = document.getElementById('billing_cycle');
+                const subscriptionForm = document.getElementById('subscriptionForm');
+
+                // Handle plan and billing cycle change to update amount (if needed)
+                function updateAmount() {
+                    const selectedOption = planSelect?.options[planSelect.selectedIndex];
+                    if (selectedOption && billingCycleSelect) {
+                        const billingCycle = billingCycleSelect.value;
+                        const monthlyPrice = selectedOption.dataset.monthlyPrice;
+                        const yearlyPrice = selectedOption.dataset.yearlyPrice;
+                        const currency = selectedOption.dataset.currency;
+                        // You can update a display element here if needed
+                    }
+                }
+
+                planSelect?.addEventListener('change', updateAmount);
+                billingCycleSelect?.addEventListener('change', updateAmount);
             });
         </script>
     @endpush

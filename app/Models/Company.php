@@ -120,4 +120,28 @@ class Company extends Model
     {
         return $this->hasOne(Domain::class)->where('primary', true)->where('status', true);
     }
+
+    /**
+     * Get the subscriptions for the company.
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    /**
+     * Get the active subscription for the company.
+     */
+    public function activeSubscription(): HasOne
+    {
+        return $this->hasOne(Subscription::class)->where('status', 'active')->latest();
+    }
+
+    /**
+     * Get the subscription transactions for the company.
+     */
+    public function subscriptionTransactions(): HasMany
+    {
+        return $this->hasMany(SubscriptionTransaction::class);
+    }
 }

@@ -77,8 +77,10 @@ class CompanyController extends Controller
         }
 
         $users = User::select('id', 'first_name', 'last_name', 'email')->orderBy('first_name')->get();
+        $plans = \App\Models\Plan::where('status', true)->orderBy('name')->get();
+        $subscriptions = $company->subscriptions()->with('plan')->latest()->get();
 
-        return view('superadmin.companies.show', compact('company', 'users'));
+        return view('superadmin.companies.show', compact('company', 'users', 'plans', 'subscriptions'));
     }
 
     /**

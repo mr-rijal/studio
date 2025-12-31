@@ -7,11 +7,18 @@ use Illuminate\View\View;
 
 class AppLayout extends Component
 {
-    /**
-     * Get the view / contents that represents the component.
-     */
+    public function __construct(
+        public string $page = '',
+        public string $for = 'web',
+    ) {}
+
     public function render(): View
     {
-        return view('layouts.app');
+        $title = $this->page ? $this->page . ' - ' . config('app.name') : config('app.name');
+        return match ($this->for) {
+            'web' => view('layouts.app', compact('title')),
+            'superadmin' => view('superadmin.layouts.app', compact('title')),
+            default => view('layouts.app', compact('title')),
+        };
     }
 }

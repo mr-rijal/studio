@@ -1,7 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
+
+Route::domain(config('app.central_domain'))->group(function () {
+    Route::get('/', [LandingPageController::class, 'index'])->name('home');
+});
 
 Route::get('/', function () {
     return view('welcome');

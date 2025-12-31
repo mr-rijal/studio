@@ -1,16 +1,20 @@
 <?php
 
+use App\Http\Controllers\SuperAdmin\CompanyController;
+use App\Http\Controllers\SuperAdmin\DashboardController;
+use App\Http\Controllers\SuperAdmin\PlanController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('superadmin')->name('s.')->middleware('auth:superadmin', 'verified:s.verification.notice')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', DashboardController::class)->name('dashboard');
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::post('companies/bulk-delete', [CompanyController::class, 'bulkDestroy'])->name('companies.bulk-destroy');
+    Route::patch('companies/{company}/domains/{domain}/toggle', [CompanyController::class, 'toggleDomain'])->name('companies.domains.toggle');
+    Route::resource('companies', CompanyController::class);
+
+    Route::post('plans/bulk-delete', [PlanController::class, 'bulkDestroy'])->name('plans.bulk-destroy');
+    Route::resource('plans', PlanController::class);
 
     Route::middleware([])->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

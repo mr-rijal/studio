@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('superadmin.auth.register');
+        return SuperAdmin::count() > 0 ? abort(404) : view('superadmin.auth.register');
     }
 
     /**
@@ -29,9 +29,13 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        if (SuperAdmin::count() > 0) {
+            return redirect()->route('s.login')->with('error', __('Superadmin account already exists. Please login.'));
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . SuperAdmin::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.SuperAdmin::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

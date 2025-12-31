@@ -3,31 +3,41 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ $title }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="author" content="">
+    <meta name="robots" content="index, follow">
+    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-icon.png') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/tabler-icons/tabler-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" id="app-style">
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <a href="{{ route('s.dashboard', absolute: false) }}">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </div>
+<body class="account-page bg-white">
+    <div class="main-wrapper">
+        <div class="overflow-hidden p-3 acc-vh">
+            <div class="row vh-100 w-100 g-0">
+                <div class="col-lg-4 vh-100 overflow-y-auto overflow-x-hidden">
+                    <div class="row">
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-            {{ $slot }}
+                        <div class="col-md-10 mx-auto">
+                            {{ $slot }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 account-bg-01"></div>
+            </div>
         </div>
     </div>
+    <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+
 </body>
 
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperAdmin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\SuperAdmin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('superadmin.auth.login');
+        $canRegisterSuperadmin = SuperAdmin::count() === 0;
+
+        return view('superadmin.auth.login', compact('canRegisterSuperadmin'));
     }
 
     /**
@@ -24,6 +27,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        if (SuperAdmin::count() === 0) {
+            return redirect()->route('s.register')->with('error', __('Superadmin account not found. Please register first.'));
+        }
+
         $request->authenticate('superadmin');
 
         $request->session()->regenerate();

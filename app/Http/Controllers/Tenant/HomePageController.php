@@ -24,6 +24,7 @@ class HomePageController extends Controller
     {
         $title = __('Terms');
         $page = Page::where('slug', 'terms')->first();
+
         return view('page', compact('title'));
     }
 

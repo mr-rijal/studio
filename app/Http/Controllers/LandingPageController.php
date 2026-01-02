@@ -80,15 +80,17 @@ class LandingPageController extends Controller
         if (! $user) {
             return redirect()->route('c.login')->with('error', 'Invalid email');
         }
+
         return redirect()->route('c.login.complete', ['token' => $user->token]);
     }
 
     public function registrationComplete()
     {
-        if (!session()->has('registration_complete') || session()->get('registration_complete') !== 'mail_sent') {
+        if (! session()->has('registration_complete') || session()->get('registration_complete') !== 'mail_sent') {
             return redirect()->route('c.home')->with('error', 'Invalid registration complete link');
         }
         session()->forget('registration_complete');
+
         return view('landing-page.auth.registration-complete');
     }
 
@@ -149,7 +151,7 @@ class LandingPageController extends Controller
         // create domain
         $domain = Domain::create([
             'company_id' => $company->id,
-            'domain' => $request->subdomain . '.lancraft.test',
+            'domain' => $request->subdomain.'.lancraft.test',
             'primary' => true,
             'status' => true,
         ]);
@@ -157,6 +159,6 @@ class LandingPageController extends Controller
         // delete token
         $token->delete();
 
-        return redirect()->to('//' . $domain->domain);
+        return redirect()->to('//'.$domain->domain);
     }
 }

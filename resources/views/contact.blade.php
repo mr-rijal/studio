@@ -12,14 +12,30 @@
                                 We'd love to hear from you. Send us a message and we'll respond as soon as possible.
                             </p>
 
-                            <form method="POST" action="#" id="contactForm">
+                            @if (session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Success!</strong> {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            @if (session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error!</strong> {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('t.contact') }}" id="contactForm">
                                 @csrf
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label fw-semibold">Full Name <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" value="{{ old('name') }}" required
+                                        id="name" name="name" value="{{ old('name') }}"
                                         placeholder="Enter your full name">
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -30,7 +46,7 @@
                                     <label for="email" class="form-label fw-semibold">Email Address <span
                                             class="text-danger">*</span></label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="email" name="email" value="{{ old('email') }}" required
+                                        id="email" name="email" value="{{ old('email') }}"
                                         placeholder="Enter your email address">
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -51,7 +67,7 @@
                                     <label for="subject" class="form-label fw-semibold">Subject <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control @error('subject') is-invalid @enderror"
-                                        id="subject" name="subject" value="{{ old('subject') }}" required
+                                        id="subject" name="subject" value="{{ old('subject') }}"
                                         placeholder="What is this regarding?">
                                     @error('subject')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -62,7 +78,7 @@
                                     <label for="message" class="form-label fw-semibold">Message <span
                                             class="text-danger">*</span></label>
                                     <textarea class="form-control @error('message') is-invalid @enderror" id="message" name="message" rows="6"
-                                        required placeholder="Enter your message here...">{{ old('message') }}</textarea>
+                                        placeholder="Enter your message here...">{{ old('message') }}</textarea>
                                     @error('message')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -119,6 +135,28 @@
         .btn-primary-custom:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        .alert {
+            border-radius: 8px;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+
+        .alert .btn-close {
+            padding: 0.5rem 0.5rem;
         }
     </style>
 </x-guest-layout>

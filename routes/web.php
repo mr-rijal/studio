@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Tenant\HomePageController;
+use App\Http\Middleware\IdentifyCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::domain(config('app.central_domain'))->name('c.')->group(function () {
@@ -27,17 +28,13 @@ Route::domain(config('app.central_domain'))->name('c.')->group(function () {
     Route::post('/register/token/{token}', [LandingPageController::class, 'completeRegistrationStore']);
 });
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware([
+    IdentifyCompanyMiddleware::class,
+])->name('t.')->group(function () {
+    Route::get('/', [HomePageController::class, 'index'])->name('home');
+    Route::get('/about', [HomePageController::class, 'about'])->name('about');
+    Route::get('/terms', [HomePageController::class, 'terms'])->name('terms');
+    Route::get('/privacy-policy', [HomePageController::class, 'privacyPolicy'])->name('privacy-policy');
+    Route::get('/contact', [HomePageController::class, 'contact'])->name('contact');
+    Route::get('/family-registration', [HomePageController::class, 'familyRegistration'])->name('family-registration');
 });

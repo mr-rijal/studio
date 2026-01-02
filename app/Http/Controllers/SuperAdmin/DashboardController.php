@@ -103,7 +103,7 @@ class DashboardController extends Controller
             ->groupBy('status')
             ->get();
 
-        $statusLabels = $subscriptionStatuses->pluck('status')->map(fn($s) => ucfirst($s))->toArray();
+        $statusLabels = $subscriptionStatuses->pluck('status')->map(fn ($s) => ucfirst($s))->toArray();
         $statusCounts = $subscriptionStatuses->pluck('count')->toArray();
 
         // Recent transactions

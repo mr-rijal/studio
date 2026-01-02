@@ -9,10 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Subscription;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
 {
@@ -128,7 +127,7 @@ class ReportController extends Controller
 
     private function exportCompanies($companies, $format = 'pdf')
     {
-        $filename = 'companies_report_' . date('Y-m-d_His');
+        $filename = 'companies_report_'.date('Y-m-d_His');
 
         if ($format === 'csv') {
             $filename .= '.csv';
@@ -159,7 +158,7 @@ class ReportController extends Controller
         }
 
         if ($format === 'excel') {
-            return Excel::download(new CompaniesExport($companies), $filename . '.xlsx');
+            return Excel::download(new CompaniesExport($companies), $filename.'.xlsx');
         }
 
         if ($format === 'pdf') {
@@ -169,7 +168,7 @@ class ReportController extends Controller
                 'date' => now()->format('F d, Y'),
             ]);
 
-            return $pdf->download($filename . '.pdf');
+            return $pdf->download($filename.'.pdf');
         }
 
         return redirect()->back()->with('error', 'Export format not supported');
@@ -177,7 +176,7 @@ class ReportController extends Controller
 
     private function exportUsers($users, $format = 'pdf')
     {
-        $filename = 'users_report_' . date('Y-m-d_His');
+        $filename = 'users_report_'.date('Y-m-d_His');
 
         if ($format === 'csv') {
             $filename .= '.csv';
@@ -208,7 +207,7 @@ class ReportController extends Controller
         }
 
         if ($format === 'excel') {
-            return Excel::download(new UsersExport($users), $filename . '.xlsx');
+            return Excel::download(new UsersExport($users), $filename.'.xlsx');
         }
 
         if ($format === 'pdf') {
@@ -218,7 +217,7 @@ class ReportController extends Controller
                 'date' => now()->format('F d, Y'),
             ]);
 
-            return $pdf->download($filename . '.pdf');
+            return $pdf->download($filename.'.pdf');
         }
 
         return redirect()->back()->with('error', 'Export format not supported');
@@ -226,7 +225,7 @@ class ReportController extends Controller
 
     private function exportSubscriptions($subscriptions, $format = 'pdf')
     {
-        $filename = 'subscriptions_report_' . date('Y-m-d_His');
+        $filename = 'subscriptions_report_'.date('Y-m-d_His');
 
         if ($format === 'csv') {
             $filename .= '.csv';
@@ -244,7 +243,7 @@ class ReportController extends Controller
                         $subscription->company->name ?? '—',
                         $subscription->plan->name ?? '—',
                         ucfirst($subscription->billing_cycle),
-                        $subscription->currency . ' ' . number_format($subscription->amount, 2),
+                        $subscription->currency.' '.number_format($subscription->amount, 2),
                         ucfirst($subscription->status),
                         $subscription->start_date->format('Y-m-d'),
                         $subscription->end_date ? $subscription->end_date->format('Y-m-d') : '—',
@@ -258,7 +257,7 @@ class ReportController extends Controller
         }
 
         if ($format === 'excel') {
-            return Excel::download(new SubscriptionsExport($subscriptions), $filename . '.xlsx');
+            return Excel::download(new SubscriptionsExport($subscriptions), $filename.'.xlsx');
         }
 
         if ($format === 'pdf') {
@@ -268,7 +267,7 @@ class ReportController extends Controller
                 'date' => now()->format('F d, Y'),
             ]);
 
-            return $pdf->download($filename . '.pdf');
+            return $pdf->download($filename.'.pdf');
         }
 
         return redirect()->back()->with('error', 'Export format not supported');

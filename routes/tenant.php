@@ -1,9 +1,21 @@
 <?php
 
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\HomePageController;
 use App\Http\Middleware\IdentifyCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware([
+    IdentifyCompanyMiddleware::class,
+    'auth',
+    'verified',
+])->group(function () {
+    // Dashboard and CRM Routes
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    });
+});
 
 Route::middleware([
     IdentifyCompanyMiddleware::class,
@@ -15,13 +27,5 @@ Route::middleware([
     Route::get('/contact', [HomePageController::class, 'contact'])->name('contact');
     Route::post('/contact', [HomePageController::class, 'contactStore']);
     Route::get('/family-registration', [HomePageController::class, 'familyRegistration'])->name('family-registration');
-
     Route::get('/{slug}', [HomePageController::class, 'page'])->name('page');
-});
-
-Route::middleware([
-    IdentifyCompanyMiddleware::class,
-])->group(function () {
-    // Dashboard and CRM Routes
-    Route::prefix('dashboard')->group(function () {});
 });

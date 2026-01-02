@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\VerifyLoginOtpController;
 use App\Http\Middleware\IdentifyCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,14 @@ Route::middleware([
             ->name('login');
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+        Route::get('verify-otp', [VerifyLoginOtpController::class, 'create'])
+            ->name('verify-otp');
+
+        Route::post('verify-otp', [VerifyLoginOtpController::class, 'store']);
+
+        Route::post('verify-otp/resend', [VerifyLoginOtpController::class, 'resend'])
+            ->name('verify-otp.resend');
 
         Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
             ->name('password.request');

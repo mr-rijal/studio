@@ -30,7 +30,7 @@ class Page extends Model
         'featured_image',
         'status',
         'published_at',
-        'author_id',
+        'user_id',
         'template',
         'order',
         'metadata',
@@ -60,11 +60,11 @@ class Page extends Model
     }
 
     /**
-     * Get the author who created the page.
+     * Get the user who created the page.
      */
-    public function author(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**

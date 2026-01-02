@@ -14,25 +14,20 @@ class HomePageController extends Controller
 
     public function about()
     {
-        $title = __('About');
-        $page = Page::where('slug', 'about')->first();
-
-        return view('page', compact('title'));
+        $page = Page::where('slug', 'about')->published()->first();
+        return view('page', compact('page'));
     }
 
     public function terms()
     {
-        $title = __('Terms');
-        $page = Page::where('slug', 'terms')->first();
-        return view('page', compact('title'));
+        $page = Page::where('slug', 'terms')->published()->first();
+        return view('page', compact('page'));
     }
 
     public function privacyPolicy()
     {
-        $title = __('Privacy Policy');
-        $page = Page::where('slug', 'privacy-policy')->first();
-
-        return view('page', compact('title'));
+        $page = Page::where('slug', 'privacy-policy')->published()->first();
+        return view('page', compact('page'));
     }
 
     public function contact()

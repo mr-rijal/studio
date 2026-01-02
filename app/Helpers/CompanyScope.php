@@ -11,9 +11,6 @@ class CompanyScope implements Scope
 {
     /**
      * Apply the scope to a given Eloquent query builder.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
      */
     public function apply(Builder $builder, Model $model): void
     {
@@ -22,7 +19,7 @@ class CompanyScope implements Scope
         if ($company) {
             /** @var string $table */
             $table = $model->getTable();
-            $builder->where($table . '.company_id', $company->id);
+            $builder->where($table.'.company_id', $company->id);
         }
     }
 

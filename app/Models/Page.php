@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Page extends Model
 {
-    use HasFactory, SoftDeletes, HasCompany;
+    use HasCompany, HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

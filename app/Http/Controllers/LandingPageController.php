@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\SchemaHelper;
 use App\Mail\SendRegistrationConfirmationCompleteMail;
 use App\Models\Company;
 use App\Models\CompanyRegistrationToken;
-use App\Models\CompanySchema;
 use App\Models\Domain;
 use App\Models\Role;
 use App\Models\User;
@@ -120,11 +118,6 @@ class LandingPageController extends Controller
         if (! $token) {
             return redirect()->route('c.home')->with('error', 'Invalid token');
         }
-
-        // SchemaHelper::createSchema($companySchema->schema_name);
-        // SchemaHelper::migrateTable($companySchema->schema_name);
-        // SchemaHelper::seedTable($companySchema->schema_name);
-        // SchemaHelper::makeActiveCompany($companySchema->schema_name);
 
         // create user
         $role = Role::where('guard', 'web')->first();

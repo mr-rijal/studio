@@ -39,7 +39,7 @@ class SubscriptionsExport implements FromCollection, WithHeadings, WithMapping
             $subscription->company->name ?? '—',
             $subscription->plan->name ?? '—',
             ucfirst($subscription->billing_cycle),
-            $subscription->currency . ' ' . number_format($subscription->amount, 2),
+            $subscription->currency.' '.number_format($subscription->amount, 2),
             ucfirst($subscription->status),
             $subscription->start_date->format('Y-m-d'),
             $subscription->end_date ? $subscription->end_date->format('Y-m-d') : '—',

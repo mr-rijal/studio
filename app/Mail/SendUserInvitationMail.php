@@ -8,7 +8,6 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\URL;
 
 class SendUserInvitationMail extends Mailable
 {
@@ -28,7 +27,7 @@ class SendUserInvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invitation to Join ' . ($this->user->company->name ?? 'Our Platform'),
+            subject: 'Invitation to Join '.($this->user->company->name ?? 'Our Platform'),
         );
     }
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->string('company_id')->unique();
             $table->string('name');
             $table->string('logo')->nullable();
-            $table->unsignedBigInteger('user_id')->index();
             $table->string('phone_number', 15)->nullable();
             $table->string('mobile_number', 15)->nullable();
             $table->string('organization_type', 50)->nullable();

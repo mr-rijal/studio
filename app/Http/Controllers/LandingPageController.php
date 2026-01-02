@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use function Pest\Laravel\session;
+
 class LandingPageController extends Controller
 {
     public function index()
@@ -62,7 +64,7 @@ class LandingPageController extends Controller
         // Send email to user with a link to complete the registration
         Mail::to($token->email)->send(new SendRegistrationConfirmationCompleteMail($token));
 
-        return redirect()->route('c.register.registration-complete');
+        return redirect()->route('c.register.registration-complete')->with('registration_complete', 'mail_sent');
     }
 
     public function login()
@@ -72,11 +74,23 @@ class LandingPageController extends Controller
 
     public function loginStore(Request $request)
     {
-        return redirect()->route('c.home');
+        $request->validate([
+            'email' => 'required|email:dns,rfc',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if (! $user) {
+            return redirect()->route('c.login')->with('error', 'Invalid email');
+        }
+        return redirect()->route('c.login.complete', ['token' => $user->token]);
     }
 
     public function registrationComplete()
     {
+        if (!session()->has('registration_complete') || session()->get('registration_complete') !== 'mail_sent') {
+            return redirect()->route('c.home')->with('error', 'Invalid registration complete link');
+        }
+        session()->forget('registration_complete');
         return view('landing-page.auth.registration-complete');
     }
 
@@ -107,34 +121,17 @@ class LandingPageController extends Controller
             return redirect()->route('c.home')->with('error', 'Invalid token');
         }
 
-        // create schema for the company
-        $companySchema = CompanySchema::create([
-            'name' => $request->name,
-            'schema_name' => 'lancraft_'.Str::slug($request->name),
-        ]);
-        // update schema name with id
-        $companySchema->schema_name = 'lancraft_'.$companySchema->id;
-        $companySchema->save();
-        SchemaHelper::createSchema($companySchema->schema_name);
-        SchemaHelper::migrateTable($companySchema->schema_name);
-        SchemaHelper::seedTable($companySchema->schema_name);
-        SchemaHelper::makeActiveCompany($companySchema->schema_name);
+        // SchemaHelper::createSchema($companySchema->schema_name);
+        // SchemaHelper::migrateTable($companySchema->schema_name);
+        // SchemaHelper::seedTable($companySchema->schema_name);
+        // SchemaHelper::makeActiveCompany($companySchema->schema_name);
 
         // create user
         $role = Role::where('guard', 'web')->first();
-        $user = User::create([
-            'role_id' => $role->id,
-            'first_name' => $token->first_name,
-            'last_name' => $token->last_name,
-            'email' => $token->email,
-            'password' => Hash::make(Str::random(10)),
-            'status' => true,
-        ]);
 
         // create company
         $company = Company::create([
             'name' => $request->name,
-            'user_id' => $user->id,
             'phone_number' => $request->phone,
             'mobile_number' => $request->phone,
             'organization_type' => 'dance',
@@ -146,11 +143,20 @@ class LandingPageController extends Controller
             'taxid_label' => 'Tax ID',
             'status' => true,
         ]);
+        $user = User::create([
+            'company_id' => $company->id,
+            'role_id' => $role->id,
+            'first_name' => $token->first_name,
+            'last_name' => $token->last_name,
+            'email' => $token->email,
+            'password' => Hash::make(Str::random(10)),
+            'status' => true,
+        ]);
 
         // create domain
         $domain = Domain::create([
             'company_id' => $company->id,
-            'domain' => $request->subdomain.'.lancraft.test',
+            'domain' => $request->subdomain . '.lancraft.test',
             'primary' => true,
             'status' => true,
         ]);
@@ -158,6 +164,6 @@ class LandingPageController extends Controller
         // delete token
         $token->delete();
 
-        return redirect()->to('//'.$domain->domain);
+        return redirect()->to('//' . $domain->domain);
     }
 }

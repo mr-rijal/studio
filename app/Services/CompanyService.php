@@ -35,6 +35,7 @@ class CompanyService
         return DB::transaction(function () use ($data) {
             $domains = $data['domains'] ?? [];
             unset($data['domains']);
+            $data['company_id'] = random_int(111111, 99999999);
 
             $company = Company::create($data);
 
@@ -42,7 +43,7 @@ class CompanyService
                 $this->syncDomains($company, $domains);
             }
 
-            return $company->load(['user', 'domains']);
+            return $company->load(['domains']);
         });
     }
 
@@ -61,7 +62,7 @@ class CompanyService
                 $this->syncDomains($company, $domains);
             }
 
-            return $company->load(['user', 'domains']);
+            return $company->load(['domains']);
         });
     }
 

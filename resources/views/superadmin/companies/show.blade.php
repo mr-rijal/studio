@@ -42,26 +42,30 @@
         <div class="row">
             <!-- Company Overview Card -->
             <div class="col-xl-4 col-lg-5">
-                <div class="card border-0 rounded-0 mb-4">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center p-4">
+                        <div class="mb-4">
                             @if ($company->logo)
                                 <img src="{{ asset('storage/' . $company->logo) }}" alt="{{ $company->name }}"
-                                    class="img-fluid rounded-circle"
-                                    style="width: 120px; height: 120px; object-fit: cover;">
+                                    class="img-fluid rounded-circle border border-3 border-primary"
+                                    style="width: 140px; height: 140px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                             @else
-                                <div
-                                    class="avatar avatar-xl rounded-circle bg-soft-primary border border-primary mx-auto">
-                                    <i class="ti ti-building fs-32 text-primary"></i>
+                                <div class="avatar avatar-xl rounded-circle bg-primary text-white mx-auto d-flex align-items-center justify-content-center border border-3 border-primary shadow-sm"
+                                    style="width: 140px; height: 140px;">
+                                    <i class="ti ti-building" style="font-size: 3.5rem;"></i>
                                 </div>
                             @endif
                         </div>
-                        <h4 class="mb-1">{{ $company->name }}</h4>
-                        <p class="text-muted mb-3">
+                        <h4 class="mb-2 fw-bold">{{ $company->name }}</h4>
+                        <p class="mb-4">
                             @if ($company->status)
-                                <span class="badge bg-success">{{ __('Active') }}</span>
+                                <span class="badge bg-success px-3 py-2 fs-6">
+                                    <i class="ti ti-check me-1"></i>{{ __('Active') }}
+                                </span>
                             @else
-                                <span class="badge bg-danger">{{ __('Inactive') }}</span>
+                                <span class="badge bg-danger px-3 py-2 fs-6">
+                                    <i class="ti ti-x me-1"></i>{{ __('Inactive') }}
+                                </span>
                             @endif
                         </p>
                         <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
@@ -80,23 +84,35 @@
                 </div>
 
                 <!-- Owner Information -->
-                <div class="card border-0 rounded-0 mb-4">
-                    <div class="card-header border-0 bg-transparent">
-                        <h5 class="mb-0">{{ __('Owner Information') }}</h5>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-user fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fw-semibold">{{ __('Owner Information') }}</h5>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         @if ($company->user)
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="avatar avatar-md rounded-circle bg-soft-primary me-3">
-                                    <i class="ti ti-user fs-16 text-primary"></i>
+                            <div class="d-flex align-items-center">
+                                <div
+                                    class="avatar avatar-md rounded-circle bg-soft-primary me-3 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-user fs-5 text-primary"></i>
                                 </div>
                                 <div>
-                                    <h6 class="mb-0">{{ $company->user->name }}</h6>
-                                    <p class="text-muted mb-0 fs-14">{{ $company->user->email }}</p>
+                                    <h6 class="mb-1 fw-semibold">{{ $company->user->name }}</h6>
+                                    <p class="text-muted mb-0 small">
+                                        <i class="ti ti-mail me-1"></i>{{ $company->user->email }}
+                                    </p>
                                 </div>
                             </div>
                         @else
-                            <p class="text-muted mb-0">{{ __('No owner assigned') }}</p>
+                            <div class="text-center py-3">
+                                <i class="ti ti-user-off fs-1 text-muted mb-2 d-block"></i>
+                                <p class="text-muted mb-0">{{ __('No owner assigned') }}</p>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -104,68 +120,104 @@
 
             <!-- Company Details -->
             <div class="col-xl-8 col-lg-7">
-                <div class="card border-0 rounded-0 mb-4">
-                    <div class="card-header border-0 bg-transparent">
-                        <h5 class="mb-0">{{ __('Company Information') }}</h5>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-info text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-building fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fw-semibold">{{ __('Company Information') }}</h5>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Company Name') }}</label>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-building me-1"></i>{{ __('Company Name') }}
+                                </label>
                                 <p class="mb-0 fw-medium">{{ $company->name }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Email') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-mail me-1"></i>{{ __('Email') }}
+                                </label>
                                 <p class="mb-0">
                                     @if ($company->email)
-                                        <a href="mailto:{{ $company->email }}">{{ $company->email }}</a>
+                                        <a href="mailto:{{ $company->email }}"
+                                            class="text-primary text-decoration-none">
+                                            {{ $company->email }}
+                                        </a>
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
                                 </p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Phone Number') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-phone me-1"></i>{{ __('Phone Number') }}
+                                </label>
                                 <p class="mb-0">
                                     @if ($company->phone_number)
-                                        <a href="tel:{{ $company->phone_number }}">{{ $company->phone_number }}</a>
+                                        <a href="tel:{{ $company->phone_number }}"
+                                            class="text-primary text-decoration-none">
+                                            {{ $company->phone_number }}
+                                        </a>
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
                                 </p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Mobile Number') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-device-mobile me-1"></i>{{ __('Mobile Number') }}
+                                </label>
                                 <p class="mb-0">
                                     @if ($company->mobile_number)
-                                        <a href="tel:{{ $company->mobile_number }}">{{ $company->mobile_number }}</a>
+                                        <a href="tel:{{ $company->mobile_number }}"
+                                            class="text-primary text-decoration-none">
+                                            {{ $company->mobile_number }}
+                                        </a>
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
                                 </p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Organization Type') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-category me-1"></i>{{ __('Organization Type') }}
+                                </label>
                                 <p class="mb-0">{{ $company->organization_type ?? '—' }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Fax Number') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-device-fax me-1"></i>{{ __('Fax Number') }}
+                                </label>
                                 <p class="mb-0">{{ $company->fax_number ?? '—' }}</p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Reply To Email') }}</label>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-mail-forward me-1"></i>{{ __('Reply To Email') }}
+                                </label>
                                 <p class="mb-0">
                                     @if ($company->replyto_email)
-                                        <a
-                                            href="mailto:{{ $company->replyto_email }}">{{ $company->replyto_email }}</a>
+                                        <a href="mailto:{{ $company->replyto_email }}"
+                                            class="text-primary text-decoration-none">
+                                            {{ $company->replyto_email }}
+                                        </a>
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
                                 </p>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label text-muted">{{ __('Created Date') }}</label>
-                                <p class="mb-0">{{ $company->created_at->format('d M Y, h:i A') }}</p>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold text-muted small mb-1">
+                                    <i class="ti ti-calendar me-1"></i>{{ __('Created Date') }}
+                                </label>
+                                <p class="mb-0">
+                                    <i
+                                        class="ti ti-clock me-1 text-muted"></i>{{ $company->created_at->format('d M Y, h:i A') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -173,11 +225,17 @@
 
                 <!-- Address Information -->
                 @if ($company->address_line_1 || $company->city || $company->state || $company->zip)
-                    <div class="card border-0 rounded-0 mb-4">
-                        <div class="card-header border-0 bg-transparent">
-                            <h5 class="mb-0">{{ __('Address Information') }}</h5>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white border-bottom py-3">
+                            <div class="d-flex align-items-center">
+                                <div
+                                    class="avatar avatar-sm bg-warning text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-map-pin fs-5"></i>
+                                </div>
+                                <h5 class="mb-0 fw-semibold">{{ __('Address Information') }}</h5>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <div class="row">
                                 <div class="col-12 mb-3">
                                     <label class="form-label text-muted">{{ __('Address Line 1') }}</label>
@@ -206,11 +264,17 @@
 
                 <!-- Tax Information -->
                 @if ($company->tax_number || $company->tax_rate || $company->tax_label)
-                    <div class="card border-0 rounded-0 mb-4">
-                        <div class="card-header border-0 bg-transparent">
-                            <h5 class="mb-0">{{ __('Tax Information') }}</h5>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-white border-bottom py-3">
+                            <div class="d-flex align-items-center">
+                                <div
+                                    class="avatar avatar-sm bg-danger text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                    <i class="ti ti-receipt fs-5"></i>
+                                </div>
+                                <h5 class="mb-0 fw-semibold">{{ __('Tax Information') }}</h5>
+                            </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label text-muted">{{ __('Tax ID Label') }}</label>
@@ -260,11 +324,17 @@
                 @endif
 
                 <!-- Settings -->
-                <div class="card border-0 rounded-0">
-                    <div class="card-header border-0 bg-transparent">
-                        <h5 class="mb-0">{{ __('Settings') }}</h5>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-secondary text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-settings fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fw-semibold">{{ __('Settings') }}</h5>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label text-muted">{{ __('Date Format') }}</label>
@@ -330,11 +400,17 @@
                 </div>
 
                 <!-- Domains Card -->
-                <div class="card border-0 rounded-0">
-                    <div class="card-header border-0 bg-transparent">
-                        <h5 class="mb-0">{{ __('Domains') }}</h5>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-success text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-world fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fw-semibold">{{ __('Domains') }}</h5>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         @if ($company->domains->count() > 0)
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
@@ -397,15 +473,22 @@
                 </div>
 
                 <!-- Subscriptions Card -->
-                <div class="card border-0 rounded-0">
-                    <div class="card-header border-0 bg-transparent d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">{{ __('Subscriptions') }}</h5>
+                <div class="card border-0 shadow-sm">
+                    <div
+                        class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-purple text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-credit-card fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fw-semibold">{{ __('Subscriptions') }}</h5>
+                        </div>
                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                             data-bs-target="#addSubscriptionModal">
                             <i class="ti ti-plus me-1"></i>{{ __('Add Subscription') }}
                         </button>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body p-4">
                         @if ($subscriptions->count() > 0)
                             <div class="table-responsive">
                                 <table class="table table-hover mb-0">
@@ -693,6 +776,30 @@
             </div>
         </div>
     </div>
+
+    @push('styles')
+        <style>
+            .avatar {
+                width: 2.5rem;
+                height: 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .card-header {
+                background: linear-gradient(to right, #f8f9fa, #ffffff);
+            }
+
+            .bg-purple {
+                background-color: #6f42c1 !important;
+            }
+
+            .table-hover tbody tr:hover {
+                background-color: #f8f9fa;
+            }
+        </style>
+    @endpush
 
     @push('scripts')
         <script>

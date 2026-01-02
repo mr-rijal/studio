@@ -27,6 +27,7 @@ Route::domain(config('app.central_domain'))->name('c.')->group(function () {
     Route::post('/register/token/{token}', [LandingPageController::class, 'completeRegistrationStore']);
 });
 
+
 Route::get('/', function () {
     return view('welcome');
 });

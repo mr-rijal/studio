@@ -98,6 +98,22 @@ class Company extends Model
     }
 
     /**
+     * Get the users for the company.
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+
+    /**
+     * Get the primary/owner user for the company.
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class)->oldest();
+    }
+
+    /**
      * Get the domains for the company.
      */
     public function domains(): HasMany

@@ -47,15 +47,15 @@
                                     <p class="fs-14 mb-1">Total Companies</p>
                                     <h2 class="mb-1 fs-16">{{ $totalCompanies }}</h2>
                                     <p
-                                        class="text-{{ $totalCompaniesDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
-                                        @if ($totalCompaniesDifference > 0)
+                                        class="text-{{ $totalCompaniesDifference >= 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalCompaniesDifference >= 0)
                                             <i class="ti ti-arrow-bar-up me-1"></i>
                                         @else
                                             <i class="ti ti-arrow-bar-down me-1"></i>
                                         @endif
-                                        {{ $totalCompaniesDifference }}%
+                                        {{ abs($totalCompaniesDifference) }}%
                                         <span class="text-body ms-1">
-                                            {{ $totalCompaniesDifference > 0 ? __('from last month') : __('to last month') }}
+                                            {{ $totalCompaniesDifference >= 0 ? __('from last month') : __('from last month') }}
                                         </span>
                                     </p>
                                 </div>
@@ -83,15 +83,15 @@
                                     <p class="fs-14 mb-1">{{ __('Active Companies') }}</p>
                                     <h2 class="mb-1 fs-16">{{ $activeCompanies }}</h2>
                                     <p
-                                        class="text-{{ $activeCompaniesDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
-                                        @if ($activeCompaniesDifference > 0)
+                                        class="text-{{ $activeCompaniesDifference >= 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($activeCompaniesDifference >= 0)
                                             <i class="ti ti-arrow-bar-up me-1"></i>
                                         @else
                                             <i class="ti ti-arrow-bar-down me-1"></i>
                                         @endif
-                                        {{ $activeCompaniesDifference }}%
+                                        {{ abs($activeCompaniesDifference) }}%
                                         <span class="text-body ms-1">
-                                            {{ $activeCompaniesDifference > 0 ? __('from last month') : __('to last month') }}
+                                            {{ __('from last month') }}
                                         </span>
                                     </p>
                                 </div>
@@ -119,15 +119,15 @@
                                     <p class="fs-14 mb-1">{{ __('Total Subscribers') }}</p>
                                     <h2 class="mb-1 fs-16">{{ $totalSubscribers }}</h2>
                                     <p
-                                        class="text-{{ $totalSubscribersDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
-                                        @if ($totalSubscribersDifference > 0)
+                                        class="text-{{ $totalSubscribersDifference >= 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalSubscribersDifference >= 0)
                                             <i class="ti ti-arrow-bar-up me-1"></i>
                                         @else
                                             <i class="ti ti-arrow-bar-down me-1"></i>
                                         @endif
-                                        {{ $totalSubscribersDifference }}%
+                                        {{ abs($totalSubscribersDifference) }}%
                                         <span class="text-body ms-1">
-                                            {{ $totalSubscribersDifference > 0 ? __('from last month') : __('to last month') }}
+                                            {{ __('from last month') }}
                                         </span>
                                     </p>
                                 </div>
@@ -145,31 +145,31 @@
             </div>
             <!-- /Total Companies -->
 
-            <!-- Total Companies -->
+            <!-- Total Users -->
             <div class="col-xl-3 col-sm-6 d-flex">
                 <div class="card flex-fill mb-0 position-relative overflow-hidden">
                     <div class="card-body position-relative z-1">
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="d-flex align-items-start justify-content-between">
                                 <div>
-                                    <p class="fs-14 mb-1">{{ __('Total Plans') }}</p>
-                                    <h2 class="mb-1 fs-16">{{ $totalPlans }}</h2>
-                                    <p class="text-{{ $totalPlansDifference > 0 ? 'success' : 'danger' }} mb-0 fs-13">
-                                        @if ($totalPlansDifference > 0)
+                                    <p class="fs-14 mb-1">{{ __('Total Users') }}</p>
+                                    <h2 class="mb-1 fs-16">{{ $totalUsers }}</h2>
+                                    <p class="text-{{ $totalUsersDifference >= 0 ? 'success' : 'danger' }} mb-0 fs-13">
+                                        @if ($totalUsersDifference >= 0)
                                             <i class="ti ti-arrow-bar-up me-1"></i>
                                         @else
                                             <i class="ti ti-arrow-bar-down me-1"></i>
                                         @endif
-                                        {{ $totalPlansDifference }}%
+                                        {{ abs($totalUsersDifference) }}%
                                         <span class="text-body ms-1">
-                                            {{ $totalPlansDifference > 0 ? __('from last month') : __('to last month') }}
+                                            {{ __('from last month') }}
                                         </span>
                                     </p>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <span class="avatar avatar-md rounded-circle bg-soft-danger border border-danger mb-3">
-                                    <i class="ti ti-businessplan fs-16 text-primary"></i>
+                                    <i class="ti ti-users fs-16 text-danger"></i>
                                 </span>
                             </div>
                         </div>
@@ -178,7 +178,7 @@
                         class="img-fluid position-absolute top-0 Start-0">
                 </div>
             </div>
-            <!-- /Total Companies -->
+            <!-- /Total Users -->
 
         </div>
         <!-- end row -->
@@ -186,463 +186,265 @@
         <!-- start row -->
         <div class="row">
             <!-- Companies -->
-            <div class="col-xxl-3 col-lg-6 d-flex">
+            <div class="col-xxl-12 col-lg-12 d-flex">
                 <div class="card flex-fill">
                     <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <h6 class="mb-0">Companies</h6>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle btn btn-outline-light shadow p-2" data-bs-toggle="dropdown"
-                                href="javascript:void(0);">
-                                <i class="ti ti-calendar me-1"></i>This Week
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    This Month
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    This Week
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    Today
-                                </a>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-body">
-                        <div id="company-chart"></div>
-                        <p class="text-success mb-0 fs-13 text-center"> <i
-                                class="ti ti-arrow-bar-up me-1"></i>12.5%<span class="text-body ms-1">from
-                                last month</span></p>
+                        <div id="company-chart-dashboard"></div>
+                        <p
+                            class="text-{{ $totalCompaniesDifference >= 0 ? 'success' : 'danger' }} mb-0 fs-13 text-center">
+                            <i class="ti ti-arrow-bar-{{ $totalCompaniesDifference >= 0 ? 'up' : 'down' }} me-1"></i>
+                            {{ abs($totalCompaniesDifference) }}%
+                            <span class="text-body ms-1">from last month</span>
+                        </p>
                     </div>
                 </div>
             </div>
             <!-- /Companies -->
 
             <!-- Revenue -->
-            <div class="col-lg-6 d-flex">
+            <div class="col-lg-12 d-flex">
                 <div class="card flex-fill">
                     <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
                         <h6 class="mb-0">Revenue</h6>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle btn btn-outline-light shadow p-2" data-bs-toggle="dropdown"
-                                href="javascript:void(0);">
-                                <i class="ti ti-calendar me-1"></i>2025
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    2025
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    2024
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    2023
-                                </a>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-body pb-0">
                         <div class="d-flex align-items-center justify-content-between flex-wrap mb-3">
                             <div class="mb-1">
-                                <h5 class="mb-2 fs-16 fw-bold">$89,878,58</h5>
-                                <p class="mb-0 fs-13"><span class="text-success fw-normal me-1"><i
-                                            class="ti ti-arrow-bar-up me-1"></i>40%</span>increased from last
-                                    year</p>
+                                <h5 class="mb-2 fs-16 fw-bold">${{ number_format($currentMonthRevenue, 2) }}</h5>
+                                <p class="mb-0 fs-13">
+                                    <span
+                                        class="text-{{ $revenueDifference >= 0 ? 'success' : 'danger' }} fw-normal me-1">
+                                        <i
+                                            class="ti ti-arrow-bar-{{ $revenueDifference >= 0 ? 'up' : 'down' }} me-1"></i>
+                                        {{ abs($revenueDifference) }}%
+                                    </span>
+                                    {{ $revenueDifference >= 0 ? 'increased' : 'decreased' }} from last month
+                                </p>
                             </div>
-                            <p class="fs-14 text-dark d-flex align-items-center mb-1"><i
-                                    class="ti ti-circle-filled me-1 fs-6 text-teal"></i>Revenue</p>
+                            <p class="fs-14 text-dark d-flex align-items-center mb-1">
+                                <i class="ti ti-circle-filled me-1 fs-6 text-teal"></i>Revenue
+                            </p>
                         </div>
-                        <div id="revenue-income"></div>
+                        <div id="revenue-income-dashboard"></div>
                     </div>
                 </div>
             </div>
             <!-- /Revenue -->
 
             <!-- Top Plans -->
-            <div class="col-xxl-3 col-xl-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
-                        <h6 class="mb-0">Top Plans</h6>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle btn btn-outline-light shadow p-2" data-bs-toggle="dropdown"
-                                href="javascript:void(0);">
-                                <i class="ti ti-calendar me-1"></i>Last 30 Days
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    Last 30 Days
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    Last 10 Days
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item">
-                                    Today
-                                </a>
+            <div class="col-xxl-6 col-xl-6 d-flex">
+                <div class="card flex-fill border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-info text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-package fs-5"></i>
                             </div>
+                            <h6 class="mb-0 fw-semibold">{{ __('Top Plans') }}</h6>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="plan-overview"></div>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <p class="f-14 fw-medium text-dark mb-0"><i
-                                    class="ti ti-circle-filled text-info me-1"></i>Basic </p>
-                            <p class="f-14 fw-medium text-dark mb-0">60%</p>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <p class="f-14 fw-medium text-dark mb-0"><i
-                                    class="ti ti-circle-filled text-warning me-1"></i>Premium</p>
-                            <p class="f-14 fw-medium text-dark mb-0">20%</p>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-0">
-                            <p class="f-14 fw-medium text-dark mb-0"><i
-                                    class="ti ti-circle-filled text-primary me-1"></i>Enterprise</p>
-                            <p class="f-14 fw-medium text-dark mb-0">20%</p>
-                        </div>
+                        <div id="plan-overview-dashboard"></div>
+                        @php
+                            $totalPlanSubscriptions = array_sum($planCounts);
+                            $colors = ['#3550DC', '#FE9738', '#27EAEA', '#10B981', '#EF4444'];
+                        @endphp
+                        @if ($totalPlanSubscriptions > 0)
+                            @foreach ($planLabels as $index => $planName)
+                                @php
+                                    $percentage = round(($planCounts[$index] / $totalPlanSubscriptions) * 100, 1);
+                                @endphp
+                                <div
+                                    class="d-flex align-items-center justify-content-between {{ $index < count($planLabels) - 1 ? 'mb-3' : 'mb-0' }}">
+                                    <p class="f-14 fw-medium text-dark mb-0">
+                                        <i class="ti ti-circle-filled me-1"
+                                            style="color: {{ $colors[$index % count($colors)] }}"></i>
+                                        {{ $planName }}
+                                    </p>
+                                    <p class="f-14 fw-medium text-dark mb-0">{{ $percentage }}%</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p class="text-muted text-center mb-0">{{ __('No subscriptions yet') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
             <!-- /Top Plans -->
-        </div>
-        <!-- end row -->
 
-        <!-- start row -->
-        <div class="row">
             <!-- Recent Transactions -->
-            <div class="col-xxl-4 col-xl-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
-                        <h5 class="mb-0 fs-16 fw-bold">Recent Transactions</h5>
-                        <a href="purchase-transaction.html" class="btn btn-primary btn-xs">View All</a>
+            <div class="col-xxl-6 col-xl-6 d-flex">
+                <div class="card flex-fill border-0 shadow-sm">
+                    <div
+                        class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-success text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-credit-card fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fs-16 fw-bold">{{ __('Recent Transactions') }}</h5>
+                        </div>
+                        <a href="{{ route('s.subscriptions.index') }}"
+                            class="btn btn-primary btn-xs">{{ __('View All') }}</a>
                     </div>
                     <div class="card-body pb-2">
-                        <!-- Item-1 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-01.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">NovaWave LLC</a></h6>
-                                    <p class="fs-13 mb-0">14 Sep 2025</p>
+                        @forelse($recentTransactions as $transaction)
+                            <div
+                                class="d-sm-flex justify-content-between flex-wrap {{ !$loop->last ? 'mb-4' : 'mb-0' }}">
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="avatar avatar-md border rounded-circle flex-shrink-0 bg-soft-primary d-flex align-items-center justify-content-center">
+                                        <i class="ti ti-building text-primary"></i>
+                                    </div>
+                                    <div class="ms-2 flex-fill">
+                                        <h6 class="fw-medium text-truncate mb-1 fs-14">
+                                            <a href="{{ route('s.companies.show', $transaction->company) }}"
+                                                class="text-decoration-none">
+                                                {{ $transaction->company->name ?? '—' }}
+                                            </a>
+                                        </h6>
+                                        <p class="fs-13 mb-0">
+                                            {{ $transaction->paid_at ? $transaction->paid_at->format('d M Y') : '—' }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-sm-end mb-0">
+                                    <h6 class="fw-medium text-truncate mb-1 fs-14 text-success">
+                                        +{{ $transaction->currency }} {{ number_format($transaction->amount, 2) }}
+                                    </h6>
+                                    <p class="fs-13 mb-0">
+                                        {{ $transaction->subscription->plan->name ?? '—' }}
+                                        ({{ ucfirst($transaction->subscription->billing_cycle ?? '—') }})
+                                    </p>
                                 </div>
                             </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14">+$245</h6>
-                                <p class="fs-13 mb-0">Basic (Monthly)</p>
+                        @empty
+                            <div class="text-center py-3">
+                                <p class="text-muted mb-0">{{ __('No recent transactions') }}</p>
                             </div>
-                        </div>
-
-                        <!-- Item-2 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-02.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">BlueSky</a></h6>
-                                    <p class="fs-13 mb-0">20 Mar 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14">+$395</h6>
-                                <p class="fs-13 mb-0">Enterprise (Yearly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-3 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-03.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">Silver
-                                            Hawk</a></h6>
-                                    <p class="fs-13 mb-0">26 Mar 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14">+$145</h6>
-                                <p class="fs-13 mb-0">Advanced (Monthly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-4 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-04.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">Summit
-                                            Peak</a></h6>
-                                    <p class="fs-13 mb-0">10 Feb 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14">+$758</h6>
-                                <p class="fs-13 mb-0">Enterprise (Monthly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-5 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-0">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-05.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">RiverStone Ltd</a></h6>
-                                    <p class="fs-13 mb-0">10 Jan 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14">+$977</h6>
-                                <p class="fs-13 mb-0">Premium (Yearly)</p>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
             <!-- /Recent Transactions -->
 
             <!-- Recently Registered -->
-            <div class="col-xxl-4 col-xl-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
-                        <h5 class="mb-0 fs-16 fw-bold">Recently Registered</h5>
-                        <a href="purchase-transaction.html" class="btn btn-primary btn-xs">View All</a>
+            <div class="col-xxl-6 col-xl-6 d-flex">
+                <div class="card flex-fill border-0 shadow-sm">
+                    <div
+                        class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-building fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fs-16 fw-bold">{{ __('Recently Registered') }}</h5>
+                        </div>
+                        <a href="{{ route('s.companies.index') }}"
+                            class="btn btn-primary btn-xs">{{ __('View All') }}</a>
                     </div>
                     <div class="card-body pb-2">
-                        <!-- Item-1 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-07.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">Bright
-                                            Bridge Grp</a></h6>
-                                    <p class="fs-13 mb-0">Basic (Monthly)</p>
+                        @forelse($recentCompanies as $company)
+                            <div
+                                class="d-sm-flex justify-content-between flex-wrap {{ !$loop->last ? 'mb-4' : 'mb-0' }}">
+                                <div class="d-flex align-items-center">
+                                    @if ($company->logo)
+                                        <img src="{{ asset('storage/' . $company->logo) }}"
+                                            alt="{{ $company->name }}"
+                                            class="avatar avatar-md border rounded-circle flex-shrink-0"
+                                            style="width: 40px; height: 40px; object-fit: cover;">
+                                    @else
+                                        <div
+                                            class="avatar avatar-md border rounded-circle flex-shrink-0 bg-soft-primary d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-building text-primary"></i>
+                                        </div>
+                                    @endif
+                                    <div class="ms-2 flex-fill">
+                                        <h6 class="fw-medium text-truncate mb-1 fs-14">
+                                            <a href="{{ route('s.companies.show', $company) }}"
+                                                class="text-decoration-none">
+                                                {{ $company->name }}
+                                            </a>
+                                        </h6>
+                                        <p class="fs-13 mb-0">
+                                            {{ $company->activeSubscription->plan->name ?? 'No Plan' }}
+                                            ({{ $company->activeSubscription ? ucfirst($company->activeSubscription->billing_cycle) : '—' }})
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-sm-end mb-0">
+                                    <p class="fs-14 mb-0">{{ $company->users->count() }} {{ __('Users') }}</p>
+                                    <h6 class="fw-normal text-truncate mb-0 fs-14">{{ $company->email ?? '—' }}</h6>
                                 </div>
                             </div>
-                            <div class="text-sm-end mb-0">
-                                <p class="fs-14 mb-0">150 Users</p>
-                                <h6 class="fw-normal text-truncate mb-0 fs-14">bbg@example.com</h6>
+                        @empty
+                            <div class="text-center py-3">
+                                <p class="text-muted mb-0">{{ __('No recently registered companies') }}</p>
                             </div>
-                        </div>
-
-                        <!-- Item-2 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-08.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">CoastalStar Co.</a></h6>
-                                    <p class="fs-13 mb-0">2Enterprise (Yearly)</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <p class="fs-14 mb-0">200 Users</p>
-                                <h6 class="fw-normal text-truncate mb-0 fs-14">csc@example.com</h6>
-                            </div>
-                        </div>
-
-                        <!-- Item-3 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-09.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">HarborView</a></h6>
-                                    <p class="fs-13 mb-0">Advanced (Monthly)</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <p class="fs-14 mb-0">129 Users</p>
-                                <h6 class="fw-normal text-truncate mb-0 fs-14">hv@example.com</h6>
-                            </div>
-                        </div>
-
-                        <!-- Item-4 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-10.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">Golden
-                                            Gate Ltd</a></h6>
-                                    <p class="fs-13 mb-0">Enterprise (Monthly)</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <p class="fs-14 mb-0">103 Users</p>
-                                <h6 class="fw-normal text-truncate mb-0 fs-14">ggl@example.com</h6>
-                            </div>
-                        </div>
-
-                        <!-- Item-5 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-0">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-11.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">Redwood Inc</a></h6>
-                                    <p class="fs-13 mb-0">Premium (Yearly)</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <p class="fs-14 mb-0">109 Users</p>
-                                <h6 class="fw-normal text-truncate mb-0 fs-14">rw@example.com</h6>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
             <!-- /Recent Registered -->
 
             <!-- Recent Plan Expired -->
-            <div class="col-xxl-4 col-xl-12 d-flex">
-                <div class="card flex-fill">
-                    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
-                        <h5 class="mb-0 fs-16 fw-bold">Recently Plan Expired</h5>
-                        <a href="purchase-transaction.html" class="btn btn-primary btn-xs">View All</a>
+            <div class="col-xxl-6 col-xl-6 d-flex">
+                <div class="card flex-fill border-0 shadow-sm">
+                    <div
+                        class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="avatar avatar-sm bg-warning text-white rounded-circle me-2 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-alert-triangle fs-5"></i>
+                            </div>
+                            <h5 class="mb-0 fs-16 fw-bold">{{ __('Expiring Soon') }}</h5>
+                        </div>
+                        <a href="{{ route('s.subscriptions.index') }}"
+                            class="btn btn-primary btn-xs">{{ __('View All') }}</a>
                     </div>
                     <div class="card-body pb-2">
-                        <!-- Item-1 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-12.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">VK Pvt
-                                            Ltd </a></h6>
-                                    <p class="fs-13 mb-0">14 Sep 2025</p>
+                        @forelse($expiringSubscriptions as $subscription)
+                            <div
+                                class="d-sm-flex justify-content-between flex-wrap {{ !$loop->last ? 'mb-4' : 'mb-0' }}">
+                                <div class="d-flex align-items-center">
+                                    @if ($subscription->company->logo)
+                                        <img src="{{ asset('storage/' . $subscription->company->logo) }}"
+                                            alt="{{ $subscription->company->name }}"
+                                            class="avatar avatar-md border rounded-circle flex-shrink-0"
+                                            style="width: 40px; height: 40px; object-fit: cover;">
+                                    @else
+                                        <div
+                                            class="avatar avatar-md border rounded-circle flex-shrink-0 bg-soft-warning d-flex align-items-center justify-content-center">
+                                            <i class="ti ti-building text-warning"></i>
+                                        </div>
+                                    @endif
+                                    <div class="ms-2 flex-fill">
+                                        <h6 class="fw-medium text-truncate mb-1 fs-14">
+                                            <a href="{{ route('s.companies.show', $subscription->company) }}"
+                                                class="text-decoration-none">
+                                                {{ $subscription->company->name }}
+                                            </a>
+                                        </h6>
+                                        <p class="fs-13 mb-0">{{ $subscription->end_date->format('d M Y') }}</p>
+                                    </div>
+                                </div>
+                                <div class="text-sm-end mb-0">
+                                    <h6 class="fw-medium text-truncate mb-1 fs-14">
+                                        <span class="badge bg-warning">{{ __('Expires Soon') }}</span>
+                                    </h6>
+                                    <p class="fs-13 mb-0">{{ $subscription->plan->name ?? '—' }}
+                                        ({{ ucfirst($subscription->billing_cycle) }})
+                                    </p>
                                 </div>
                             </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javascript:void(0);"
-                                        class="text-decoration-underline text-info">Send Reminder</a></h6>
-                                <p class="fs-13 mb-0">Basic (Monthly)</p>
+                        @empty
+                            <div class="text-center py-3">
+                                <p class="text-muted mb-0">{{ __('No subscriptions expiring soon') }}</p>
                             </div>
-                        </div>
-
-                        <!-- Item-2 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-13.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">RiverStone Ltd</a></h6>
-                                    <p class="fs-13 mb-0">20 Mar 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javascript:void(0);"
-                                        class="text-decoration-underline text-info">Send Reminder</a></h6>
-                                <p class="fs-13 mb-0">Enterprise (Yearly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-3 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-14.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javscript:void(0);">Summit
-                                            Peak</a></h6>
-                                    <p class="fs-13 mb-0">26 Mar 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javascript:void(0);"
-                                        class="text-decoration-underline text-info">Send Reminder</a></h6>
-                                <p class="fs-13 mb-0">Advanced (Monthly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-4 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-4">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-15.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">Redwood Inc</a></h6>
-                                    <p class="fs-13 mb-0">10 Feb 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javascript:void(0);"
-                                        class="text-decoration-underline text-info">Send Reminder</a></h6>
-                                <p class="fs-13 mb-0">Enterprise (Monthly)</p>
-                            </div>
-                        </div>
-
-                        <!-- Item-5 -->
-                        <div class="d-sm-flex justify-content-between flex-wrap mb-0">
-                            <div class="d-flex align-items-center">
-                                <a href="javscript:void(0);"
-                                    class="avatar avatar-md border rounded-circle flex-shrink-0">
-                                    <img src="{{ asset('assets/img/icons/company-icon-16.svg') }}"
-                                        class="img-fluid w-auto h-auto" alt="img">
-                                </a>
-                                <div class="ms-2 flex-fill">
-                                    <h6 class="fw-medium text-truncate mb-1 fs-14"><a
-                                            href="javscript:void(0);">NovaWave LLC</a></h6>
-                                    <p class="fs-13 mb-0">10 Jan 2025</p>
-                                </div>
-                            </div>
-                            <div class="text-sm-end mb-0">
-                                <h6 class="fw-medium text-truncate mb-1 fs-14"><a href="javascript:void(0);"
-                                        class="text-decoration-underline text-info">Send Reminder</a></h6>
-                                <p class="fs-13 mb-0">Premium (Yearly)</p>
-                            </div>
-                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -650,4 +452,191 @@
         </div>
         <!-- end row -->
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Company Registrations Chart
+                var companyChartOptions = {
+                    series: [{
+                        name: 'Companies',
+                        data: @json($companyRegistrations)
+                    }],
+                    chart: {
+                        type: 'area',
+                        height: 200,
+                        toolbar: {
+                            show: false
+                        },
+                        zoom: {
+                            enabled: false
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    colors: ['#3550DC'],
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.7,
+                            opacityTo: 0.3,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    xaxis: {
+                        categories: @json($companyLabels),
+                        labels: {
+                            style: {
+                                fontSize: '11px'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                fontSize: '11px'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val + " companies"
+                            }
+                        }
+                    }
+                };
+
+                var companyChart = new ApexCharts(document.querySelector("#company-chart-dashboard"),
+                    companyChartOptions);
+                companyChart.render();
+
+                // Revenue Chart
+                var revenueChartOptions = {
+                    series: [{
+                        name: 'Revenue',
+                        data: @json($revenueData)
+                    }],
+                    chart: {
+                        type: 'line',
+                        height: 300,
+                        toolbar: {
+                            show: false
+                        },
+                        zoom: {
+                            enabled: false
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 3
+                    },
+                    colors: ['#27EAEA'],
+                    markers: {
+                        size: 4,
+                        hover: {
+                            size: 6
+                        }
+                    },
+                    xaxis: {
+                        categories: @json($revenueLabels),
+                        labels: {
+                            style: {
+                                fontSize: '11px'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        labels: {
+                            style: {
+                                fontSize: '11px'
+                            },
+                            formatter: function(val) {
+                                return "$" + val.toFixed(0)
+                            }
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return "$" + val.toFixed(2)
+                            }
+                        }
+                    },
+                    grid: {
+                        borderColor: '#f1f1f1',
+                    }
+                };
+
+                var revenueChart = new ApexCharts(document.querySelector("#revenue-income-dashboard"),
+                    revenueChartOptions);
+                revenueChart.render();
+
+                // Plan Distribution Donut Chart
+                var planChartOptions = {
+                    series: @json($planCounts),
+                    chart: {
+                        type: 'donut',
+                        height: 250
+                    },
+                    labels: @json($planLabels),
+                    colors: ['#3550DC', '#FE9738', '#27EAEA', '#10B981', '#EF4444'],
+                    legend: {
+                        show: false
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function(val) {
+                            return val.toFixed(0) + "%"
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '70%'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val + " subscriptions"
+                            }
+                        }
+                    }
+                };
+
+                var planChart = new ApexCharts(document.querySelector("#plan-overview-dashboard"), planChartOptions);
+                planChart.render();
+
+                // Subscription Status Chart (if needed)
+                @if (count($statusLabels) > 0)
+                    var statusChartOptions = {
+                        series: @json($statusCounts),
+                        chart: {
+                            type: 'pie',
+                            height: 200
+                        },
+                        labels: @json($statusLabels),
+                        colors: ['#10B981', '#EF4444', '#6B7280', '#F59E0B', '#3B82F6'],
+                        legend: {
+                            position: 'bottom'
+                        },
+                        dataLabels: {
+                            enabled: true
+                        }
+                    };
+                @endif
+            });
+        </script>
+    @endpush
 </x-app-layout>

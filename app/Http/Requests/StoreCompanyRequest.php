@@ -24,7 +24,9 @@ class StoreCompanyRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'user_id' => ['required', 'exists:users,id'],
+            'user_first_name' => ['required', 'string', 'max:50'],
+            'user_last_name' => ['required', 'string', 'max:50'],
+            'user_email' => ['required', 'email:dns,rfc', 'max:255', 'unique:users,email'],
             'phone_number' => ['nullable', 'string', 'max:15'],
             'mobile_number' => ['nullable', 'string', 'max:15'],
             'organization_type' => ['nullable', 'string', 'max:50'],

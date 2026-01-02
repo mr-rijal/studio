@@ -4,6 +4,7 @@ use App\Http\Controllers\SuperAdmin\CompanyController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\PlanController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
+use App\Http\Controllers\SuperAdmin\ReportController;
 use App\Http\Controllers\SuperAdmin\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,11 @@ Route::prefix('superadmin')->name('s.')->middleware('auth:superadmin', 'verified
     Route::post('subscriptions/{subscription}/transactions', [SubscriptionController::class, 'storeTransaction'])->name('subscriptions.transactions.store');
     Route::get('companies/{company}/subscriptions', [SubscriptionController::class, 'companySubscriptions'])->name('companies.subscriptions');
     Route::resource('subscriptions', SubscriptionController::class);
+
+    // Reports
+    Route::get('reports/companies', [ReportController::class, 'companyReports'])->name('reports.companies');
+    Route::get('reports/users', [ReportController::class, 'userReports'])->name('reports.users');
+    Route::get('reports/subscriptions', [ReportController::class, 'subscriptionReports'])->name('reports.subscriptions');
 
     Route::middleware([])->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

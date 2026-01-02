@@ -5,14 +5,20 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Mail\SendUserInvitationMail;
 use App\Models\Company;
 use App\Models\Domain;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\CompanyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class CompanyController extends Controller
@@ -30,9 +36,8 @@ class CompanyController extends Controller
     public function index(): View
     {
         $companies = $this->companyService->paginate();
-        $users = User::select('id', 'first_name', 'last_name', 'email')->orderBy('first_name')->get();
 
-        return view('superadmin.companies.index', compact('companies', 'users'));
+        return view('superadmin.companies.index', compact('companies'));
     }
 
     /**
@@ -40,10 +45,9 @@ class CompanyController extends Controller
      */
     public function create(): View
     {
-        $users = User::select('id', 'first_name', 'last_name', 'email')->orderBy('first_name')->get();
         $company = null;
 
-        return view('superadmin.companies.form', compact('company', 'users'));
+        return view('superadmin.companies.form', compact('company'));
     }
 
     /**
@@ -58,11 +62,60 @@ class CompanyController extends Controller
             $data['logo'] = $request->file('logo')->store('companies/logos', 'public');
         }
 
-        $company = $this->companyService->create($data);
+        // Extract user data
+        $userData = [
+            'first_name' => $data['user_first_name'],
+            'last_name' => $data['user_last_name'],
+            'email' => $data['user_email'],
+        ];
+        unset($data['user_first_name'], $data['user_last_name'], $data['user_email']);
+
+        // Create company and user in transaction
+        $company = DB::transaction(function () use ($data, $userData) {
+            // Get default role for web guard
+            $role = Role::where('guard', 'web')->first();
+
+            if (! $role) {
+                throw new \Exception('No default role found for web guard.');
+            }
+
+            // Create company first
+            $company = $this->companyService->create($data);
+
+            // Create user with temporary password
+            $user = User::create([
+                'company_id' => $company->id,
+                'role_id' => $role->id,
+                'first_name' => $userData['first_name'],
+                'last_name' => $userData['last_name'],
+                'email' => $userData['email'],
+                'password' => Hash::make(Str::random(32)), // Temporary password
+                'force_password_change' => true,
+                'status' => true,
+            ]);
+
+            // Generate password reset token for invitation
+            // Use Password facade to create token (this stores it hashed in the database)
+            // We'll send the plain token in the email, Laravel will hash it when verifying
+            $token = Str::random(64);
+            // Store the hashed token - Laravel's Password::reset() will hash the provided token and compare
+            DB::table('password_reset_tokens')->updateOrInsert(
+                ['email' => $user->email],
+                [
+                    'token' => Hash::make($token),
+                    'created_at' => now(),
+                ]
+            );
+
+            // Send invitation email
+            Mail::to($user->email)->send(new SendUserInvitationMail($user, $token));
+
+            return $company;
+        });
 
         return redirect()
             ->route('s.companies.show', $company)
-            ->with('success', 'Company created successfully.');
+            ->with('success', 'Company created successfully. Invitation email has been sent to the user.');
     }
 
     /**
@@ -94,9 +147,7 @@ class CompanyController extends Controller
             abort(404);
         }
 
-        $users = User::select('id', 'first_name', 'last_name', 'email')->orderBy('first_name')->get();
-
-        return view('superadmin.companies.form', compact('company', 'users'));
+        return view('superadmin.companies.form', compact('company'));
     }
 
     /**

@@ -1,8 +1,3 @@
-/*
-Author       : Dreamstechnologies
-Template Name: CRMS - Bootstrap Admin Template
-*/
-
 (function () {
     "use strict";
 
@@ -19,10 +14,10 @@ Template Name: CRMS - Bootstrap Admin Template
 		$('html').addClass('menu-opened');
 		return false;
 	});
-	$(".sidebar-close").on("click", function () { 
+	$(".sidebar-close").on("click", function () {
 		$wrapper.removeClass('slide-nav');
 		$('.sidebar-overlay').removeClass('opened');
-		$('html').removeClass('menu-opened');             
+		$('html').removeClass('menu-opened');
 	});
 
 	$(".sidebar-overlay").on("click", function () {
@@ -55,7 +50,7 @@ Template Name: CRMS - Bootstrap Admin Template
 		});
 		$('.sidebar-menu ul li.submenu a.active').parents('li:last').children('a:first').addClass('active').trigger('click');
 	}
-	
+
 	// Sidebar Initiate
 	init();
 	$(document).on('mouseover', function(e) {
@@ -125,7 +120,7 @@ Template Name: CRMS - Bootstrap Admin Template
 		const isMini = $body.hasClass('mini-sidebar');
 		const isFullWidth = $html.attr('data-layout') === 'full-width';
 		const isHidden = $html.attr('data-layout') === 'hidden';
-	
+
 		if (isMini) {
 			$body.removeClass('mini-sidebar');
 			$(this).addClass('active');
@@ -141,7 +136,7 @@ Template Name: CRMS - Bootstrap Admin Template
 				$(".header-left").removeClass("active");
 			}, 100);
 		}
-	
+
 		// If <html> has data-layout="full-width", apply full-width class to <body>
 		if (isFullWidth) {
 			$body.addClass('full-width').removeClass('mini-sidebar');
@@ -160,8 +155,8 @@ Template Name: CRMS - Bootstrap Admin Template
 			$(document).on('click', '.sidebar-close', function () {
 				$('body').removeClass('full-width');
 			});
-		} 
-	
+		}
+
 		return false;
 	});
 
@@ -180,20 +175,20 @@ Template Name: CRMS - Bootstrap Admin Template
 		});
 		});
 		});
-	
+
 	// Tooltip
 	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-	
+
 	// Input Mask
 	document.querySelectorAll('[data-toggle="input-mask"]').forEach(input => {
 		const format = input.getAttribute('data-mask-format');
 		const reverse = input.getAttribute('data-reverse') === 'true';
-		
+
 		if (format && typeof Inputmask !== 'undefined') {
-			Inputmask({ 
-				mask: format.replace(/0/g, '9'), 
-				reverse: reverse 
+			Inputmask({
+				mask: format.replace(/0/g, '9'),
+				reverse: reverse
 			}).mask(input);
 		}
 	});
@@ -214,10 +209,10 @@ Template Name: CRMS - Bootstrap Admin Template
 	function initChoices() {
 		document.querySelectorAll('[data-choices]').forEach(item => {
 			const config = {
-				allowHTML: true  
+				allowHTML: true
 			};
 			const attrs = item.attributes;
-	
+
 			if (attrs['data-choices-groups']) {
 				config.placeholderValue = 'This is a placeholder set in the config';
 			}
@@ -254,18 +249,18 @@ Template Name: CRMS - Bootstrap Admin Template
 			if (attrs['data-choices-text-disabled-true']) {
 				config.addItems = false;
 			}
-	
+
 			const instance = new Choices(item, config);
-	
+
 			if (attrs['data-choices-text-disabled-true']) {
 				instance.disable();
 			}
 		});
 	}
-		
+
 	// Call it when the DOM is ready
 	document.addEventListener('DOMContentLoaded', initChoices);
-		
+
 	// Initialize Flatpickr on elements with data-provider="flatpickr"
 	document.querySelectorAll('[data-provider="flatpickr"]').forEach(el => {
 		const config = {
@@ -355,7 +350,7 @@ Template Name: CRMS - Bootstrap Admin Template
 		flatpickr(item, config);
 	});
 
-  
+
 	// Select2
 	if (jQuery().select2) {
 		$('[data-toggle="select2"]').each(function () {
@@ -412,7 +407,7 @@ Template Name: CRMS - Bootstrap Admin Template
 		});
 	}
 
-	// Select 2    
+	// Select 2
     if ($('.select').length > 0) {
         $('.select').select2({
             minimumResultsForSearch: -1,
@@ -438,7 +433,7 @@ Template Name: CRMS - Bootstrap Admin Template
 	if($('.datatable').length > 0) {
 		$('.datatable').DataTable({
 			"bFilter": true,
-			"sDom": 'fBtlpi',  
+			"sDom": 'fBtlpi',
 			"ordering": true,
 			"language": {
 				search: ' ',
@@ -458,30 +453,30 @@ Template Name: CRMS - Bootstrap Admin Template
 			initComplete: (settings, json)=>{
 				$('.dataTables_filter').appendTo('#tableSearch');
 				$('.dataTables_filter').appendTo('.search-input');
-			},	
+			},
 		});
-	}		
+	}
 
 	document.addEventListener("DOMContentLoaded", function () {
 		if (document.querySelector('#filter-dropdown')) {
 			const closeBtn = document.getElementById("close-filter");
 			const filterDropdown = document.getElementById("filter-dropdown");
-	
+
 			if (closeBtn && filterDropdown) {
 				closeBtn.addEventListener("click", function () {
 					filterDropdown.classList.remove("show");
 				});
 			}
 		}
-	});	
+	});
 
 // wizard
-		$(".wizard-field .wizard-next-btn").on('click', function () { 
+		$(".wizard-field .wizard-next-btn").on('click', function () {
 		$(this).closest('fieldset').next().fadeIn('slow');
 		$(this).closest('fieldset').css({
 			'display': 'none'
 		});
-		
+
 		$('.progress-wizard .active').removeClass('active').addClass('activated').next().addClass('active');
 	});
 
@@ -497,7 +492,7 @@ Template Name: CRMS - Bootstrap Admin Template
 			$(Tab4).removeClass('active');
 			$("#v-pills-medical-history-tab").addClass('active').removeClass('activated')
 			$("#v-pills-complaints-tab").removeClass('active')
-		});	
+		});
 		document.getElementById('save-basic-info').addEventListener('click', function() {
 			$(Tab2).addClass('active');
 			$(Tab1).removeClass('active');
@@ -511,13 +506,13 @@ Template Name: CRMS - Bootstrap Admin Template
 			$("#v-pills-medical-history-tab").addClass('active');
 			$("#v-pills-vituals-tab").removeClass('active').addClass('activated');
 		});
-	
+
 		document.getElementById('save-medical-history').addEventListener('click', function() {
 			$(Tab4).addClass('active');
 			$(Tab3).removeClass('active');
 			$("#v-pills-complaints-tab").addClass('active');
 			$("#v-pills-medical-history-tab").removeClass('active').addClass('activated');
-		});	
+		});
 	}
 
 	$(".tab-links li").on('click', function() {
@@ -526,12 +521,12 @@ Template Name: CRMS - Bootstrap Admin Template
 
 
 	// wizard 2
-		$(".wizard-field .wizard-next-btn").on('click', function () { 
+		$(".wizard-field .wizard-next-btn").on('click', function () {
 		$(this).closest('fieldset').next().fadeIn('slow');
 		$(this).closest('fieldset').css({
 			'display': 'none'
 		});
-		
+
 		$('.progress-wizard .active').removeClass('active').addClass('activated').next().addClass('active');
 	});
 
@@ -546,20 +541,20 @@ Template Name: CRMS - Bootstrap Admin Template
 			$(Tab7).removeClass('active');
 			$("#v-pills-vituals-tab").addClass('active').removeClass('activated')
 			$("#v-pills-complaints-tab").removeClass('active')
-		});	
+		});
 		document.getElementById('save-basic-info').addEventListener('click', function() {
 			$(Tab6).addClass('active');
 			$(Tab5).removeClass('active');
 			$("#v-pills-vituals-tab").addClass('active');
 			$("#v-pills-info-tab").removeClass('active').addClass('activated');
 		});
-	
+
 		document.getElementById('save-vitals').addEventListener('click', function() {
 			$(Tab7).addClass('active');
 			$(Tab6).removeClass('active');
 			$("#v-pills-complaints-tab").addClass('active');
 			$("#v-pills-vituals-tab").removeClass('active').addClass('activated');
-		});	
+		});
 	}
 
 	// Staff wizard
@@ -599,7 +594,7 @@ Template Name: CRMS - Bootstrap Admin Template
 			$(this).addClass('active');
 		});
 
-		
+
 		let Tab10 = "#staff-tab-Content-one-1";
 		let Tab11 = "#staff-tab-Content-two-1";
 
@@ -640,7 +635,7 @@ Template Name: CRMS - Bootstrap Admin Template
 	$(".tab-links li").on('click', function() {
 	    $(this).addClass("active").siblings().removeClass('active');
 	});
-	
+
 
 	// add education
 
@@ -668,12 +663,12 @@ Template Name: CRMS - Bootstrap Admin Template
 						<span class="input-group-text">
 							<i class="ti ti-calendar"></i>
 						</span>
-					</div>					
+					</div>
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
 			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -731,7 +726,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
 				flatpickr(el, config);
 			});
-        }, 100); 
+        }, 100);
 
 		$(".diagnosis-info").append(servicecontent);
 		return false;
@@ -772,7 +767,7 @@ Template Name: CRMS - Bootstrap Admin Template
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
 			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -830,7 +825,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
 		flatpickr(el, config);
 	});
-}, 100); 
+}, 100);
 
 		$(".experience-info").append(servicecontent);
 		return false;
@@ -869,9 +864,9 @@ Template Name: CRMS - Bootstrap Admin Template
 					<input type="text" class="form-control">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                                                            
+			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -929,7 +924,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
 		flatpickr(el, config);
 	});
-}, 100); 
+}, 100);
 
 		$(".membership-info").append(servicecontent);
 		return false;
@@ -968,9 +963,9 @@ Template Name: CRMS - Bootstrap Admin Template
 					<input type="text" class="form-control">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                                                            
+			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -1028,7 +1023,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
 		flatpickr(el, config);
 	});
-}, 100); 
+}, 100);
 
 		$(".awards-info").append(servicecontent);
 		return false;
@@ -1098,7 +1093,7 @@ Template Name: CRMS - Bootstrap Admin Template
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
 			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -1127,27 +1122,27 @@ Template Name: CRMS - Bootstrap Admin Template
 		<div class="row diagnosis-two_details align-items-center">
 			<div class="col-md-2">
 				<div class="mb-md-3">
-					<label class="form-label mb-md-0">Fever</label> 
+					<label class="form-label mb-md-0">Fever</label>
 				</div>
 			</div>
 			<div class="col-md-5">
-				<div class="mb-3">   
+				<div class="mb-3">
 					<select class="select">
 						<option>Diagonosis Type</option>
 						<option>Hectic</option>
 						<option>Continuous Fever</option>
 						<option>Relapsing</option>
-					</select>                                     
+					</select>
 				</div>
 			</div>
 			<div class="col-md-5 d-flex align-items-end">
-				<div class="mb-3 w-100">                                        
+				<div class="mb-3 w-100">
 					<input type="text" class="form-control" placeholder="Complaint History ( Enter Min 400 Words)">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                               
-		</div>   
-		
+			</div>
+		</div>
+
 		`;
 
 		setTimeout(function () {
@@ -1176,13 +1171,13 @@ Template Name: CRMS - Bootstrap Admin Template
 		var servicecontent = `
 		<div class="row investigations_details align-items-center">
 			<div class="col-md-12 d-flex align-items-end">
-				<div class="mb-3 w-100">                                        
+				<div class="mb-3 w-100">
 					<input type="text" class="form-control">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                               
-		</div>  
-		
+			</div>
+		</div>
+
 		`;
 
 		$(".investigations-info").append(servicecontent);
@@ -1200,13 +1195,13 @@ Template Name: CRMS - Bootstrap Admin Template
 		var servicecontent = `
 		<div class="row advice_details align-items-center">
 			<div class="col-md-12 d-flex align-items-end">
-				<div class="mb-3 w-100">                                        
+				<div class="mb-3 w-100">
 					<input type="text" class="form-control">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                               
-		</div>  
-		
+			</div>
+		</div>
+
 		`;
 
 		$(".advice-info").append(servicecontent);
@@ -1223,18 +1218,18 @@ Template Name: CRMS - Bootstrap Admin Template
 	$(".add-follow").on('click', function () {
 
 		var servicecontent = `
-		
+
 		<div class="row follow_details align-items-center">
 		    <div class="col-md-12">
 				<hr class="mt-0 mb-3">
 			</div>
 			<div class="col-md-6">
 				<div class="mb-md-3">
-					<label class="form-label mb-md-0">Next Consultation</label> 
+					<label class="form-label mb-md-0">Next Consultation</label>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div class="mb-3">                                        
+				<div class="mb-3">
 					<select class="select">
 						<option>Select</option>
 						<option>Yes</option>
@@ -1244,11 +1239,11 @@ Template Name: CRMS - Bootstrap Admin Template
 			</div>
 			<div class="col-md-6">
 				<div class="mb-md-3">
-					<label class="form-label mb-md-0">Whether to come on empty Stomach?</label> 
+					<label class="form-label mb-md-0">Whether to come on empty Stomach?</label>
 				</div>
 			</div>
 			<div class="col-md-6 d-flex align-items-end">
-				<div class="mb-3 w-100">                                        
+				<div class="mb-3 w-100">
 					<select class="select">
 						<option>Select</option>
 						<option>Yes</option>
@@ -1256,9 +1251,9 @@ Template Name: CRMS - Bootstrap Admin Template
 					</select>
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                                                              
+			</div>
 		</div>
-		
+
 		`;
 
 		setTimeout(function () {
@@ -1285,16 +1280,16 @@ Template Name: CRMS - Bootstrap Admin Template
 	$(".add-invoice").on('click', function () {
 
 		var servicecontent = `
-		
+
 		<div class="row invoice_details align-items-center">
 			<div class="col-md-12 d-flex align-items-end">
-				<div class="mb-3 w-100">                                       
+				<div class="mb-3 w-100">
 					<input type="text" class="form-control">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                               
-		</div> 
-		
+			</div>
+		</div>
+
 		`;
 
 		setTimeout(function () {
@@ -1321,7 +1316,7 @@ Template Name: CRMS - Bootstrap Admin Template
 		$(".add-vitals").on('click', function () {
 
 		var servicecontent = `
-		
+
 		<div class="row vitals_details">
 			<div class="col-12">
 		       <hr class="mt-0">
@@ -1407,9 +1402,9 @@ Template Name: CRMS - Bootstrap Admin Template
 					</div>
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                                
+			</div>
 		</div>
-		
+
 		`;
 
 		$(".vitals-info").append(servicecontent);
@@ -1427,24 +1422,24 @@ Template Name: CRMS - Bootstrap Admin Template
 		$(".add-complaint").on('click', function () {
 
 		var servicecontent = `
-		
+
 		<div class="row complaint_details align-items-center">
 		    <div class="col-12">
 		       <hr class="mt-0">
 			</div>
 			<div class="col-md-2">
 				<div class="mb-md-3">
-					<label class="form-label mb-md-0">Fever</label> 
+					<label class="form-label mb-md-0">Fever</label>
 				</div>
 			</div>
 			<div class="col-md-10 d-flex align-items-end">
-				<div class="mb-3 w-100">                                        
+				<div class="mb-3 w-100">
 					<input type="text" class="form-control" placeholder="Add Symptoms">
 				</div>
 				<a href="javascript:void(0);" class="text-danger ms-2 mb-4 d-flex align-items-center trash-icon rounded-circle bg-soft-danger p-1"><i class="ti ti-trash fs-12"></i></a>
-			</div>                               
-		</div> 
-		
+			</div>
+		</div>
+
 		`;
 
 		$(".complaint-info").append(servicecontent);
@@ -1468,7 +1463,7 @@ Template Name: CRMS - Bootstrap Admin Template
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">From</label>
-                                <div class="input-icon-end position-relative">  
+                                <div class="input-icon-end position-relative">
                                     <input type="text" class="form-control timepicker-input" placeholder="-- : -- : --">
                                     <span class="input-icon-addon">
                                         <i class="ti ti-clock-hour-10 text-dark"></i>
@@ -1479,7 +1474,7 @@ Template Name: CRMS - Bootstrap Admin Template
                         <div class="col-lg-6">
                             <div class="mb-3">
                                 <label class="form-label">To</label>
-                                <div class="input-icon-end position-relative">  
+                                <div class="input-icon-end position-relative">
                                     <input type="text" class="form-control timepicker-input" placeholder="-- : -- : --">
                                     <span class="input-icon-addon">
                                         <i class="ti ti-clock-hour-10 text-dark"></i>
@@ -1523,7 +1518,7 @@ Template Name: CRMS - Bootstrap Admin Template
 
 });
 
-  
+
     // Remove Scedule
     $(document).on('click', '.remove-schedule-btn', function (e) {
         e.preventDefault();
@@ -1565,17 +1560,17 @@ Template Name: CRMS - Bootstrap Admin Template
 	if($('#calendar-appointment').length > 0) {
 		document.addEventListener('DOMContentLoaded', function() {
 			var calendarEl = document.getElementById('calendar-appointment');
-		
+
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-			  initialView: 'dayGridMonth', 
+			  initialView: 'dayGridMonth',
 			  events: [
 				{
 				  title: '',
 				  images: [
 					{ url: 'assets/img/users/user-01.jpg', data: 'James Carter - 10:00 AM to 11:00 AM' },
 					{ url: 'assets/img/users/user-02.jpg', data: 'Sophia Wilson - 10:30 AM to 11:30 AM' }
-				  ],					
-				  backgroundColor: 'rgba(0, 0, 0, .2)',				  
+				  ],
+				  backgroundColor: 'rgba(0, 0, 0, .2)',
 				  start: new Date($.now() - 168000000).toJSON().slice(0, 10)
 				},
 				{
@@ -1586,8 +1581,8 @@ Template Name: CRMS - Bootstrap Admin Template
 					  { url: 'assets/img/users/user-05.jpg', data: 'Ann - 10:00 AM to 11:00 AM' },
 					  { url: 'assets/img/users/user-06.jpg', data: 'Claffin - 11:00 AM to 12:00 PM' },
 					  { url: 'assets/img/users/user-07.jpg', data: 'Enrique - 12:30 PM to 01:30 PM' }
-					],					
-					backgroundColor: 'rgba(0, 0, 0, .2)',				  
+					],
+					backgroundColor: 'rgba(0, 0, 0, .2)',
 					start: new Date($.now() + 338000000).toJSON().slice(0, 10)
 				  },
 				  {
@@ -1597,9 +1592,9 @@ Template Name: CRMS - Bootstrap Admin Template
 						{ url: 'assets/img/users/user-09.jpg', data: 'Deacon - 10:30 AM to 11:30 AM' },
 						{ url: 'assets/img/users/user-10.jpg', data: 'Stone - 10:00 AM to 11:00 AM' },
 						{ url: 'assets/img/users/user-11.jpg', data: ' Evans - 11:00 AM to 12:00 PM' }
-					  ],					
-					  backgroundColor: 'rgba(0, 0, 0, .2)',				  
-					  start: new Date($.now() - 338000000).toJSON().slice(0, 10) 
+					  ],
+					  backgroundColor: 'rgba(0, 0, 0, .2)',
+					  start: new Date($.now() - 338000000).toJSON().slice(0, 10)
 				  },
 				  {
 					  title: '',
@@ -1608,9 +1603,9 @@ Template Name: CRMS - Bootstrap Admin Template
 						{ url: 'assets/img/users/user-13.jpg', data: 'Deacon - 10:30 AM to 11:30 AM' },
 						{ url: 'assets/img/users/user-14.jpg', data: 'Stone - 10:00 AM to 11:00 AM' },
 						{ url: 'assets/img/users/user-15.jpg', data: ' Evans - 11:00 AM to 12:00 PM' }
-					  ],					
-					  backgroundColor: 'rgba(0, 0, 0, .2)',				  
-					  start: new Date($.now() + 68000000).toJSON().slice(0, 10) 
+					  ],
+					  backgroundColor: 'rgba(0, 0, 0, .2)',
+					  start: new Date($.now() + 68000000).toJSON().slice(0, 10)
 				  }
 			  ],
 			  headerToolbar: {
@@ -1619,18 +1614,18 @@ Template Name: CRMS - Bootstrap Admin Template
 			  },
 			  eventDidMount: function(info) {
 				var eventEl = info.el;
-				var tdEl = eventEl.closest('td'); 		
+				var tdEl = eventEl.closest('td');
 				if (tdEl) {
-				  tdEl.style.backgroundColor = info.event.backgroundColor; 
+				  tdEl.style.backgroundColor = info.event.backgroundColor;
 				}
 				var eventEl = info.el;
-				var images = info.event.extendedProps.images;		
+				var images = info.event.extendedProps.images;
 				var imagesHtml = images.slice(0, 2).map(function(imageData) {
 				  return '<img class="fc-event-image avatar avatar-sm rounded-circle calendar-img" src="' + imageData.url + '" alt="' + imageData.tooltip + '" data-bs-toggle="tooltip" data-bs-placement="top" title="' + imageData.data + '">';
-				}).join('');				
+				}).join('');
 				var moreImagesHtml = images.slice(2).map(function(imageData) {
 				  return '<div class="d-flex align-items-center avatar avatar-sm rounded-circle cal-img"><img class="fc-event-image calendar-img" src="' + imageData.url + '"  alt="' + imageData.data + '" data-bs-toggle="tooltip" data-bs-placement="top" title="' + imageData.tooltip + '" style="display: none;"><span style="display:none;">' + imageData.data + '</span></div>';
-				}).join('');	
+				}).join('');
 
 				var showMoreLink = '';
 if (images.length > 2) {
@@ -1681,27 +1676,27 @@ if (images.length > 2) {
   });
 }
 
-			
+
 				var imagesContainer = document.createElement('div');
 				imagesContainer.innerHTML = imagesHtml + moreImagesHtml + showMoreLink;
-				eventEl.querySelector('.fc-event-title-container').appendChild(imagesContainer);		
+				eventEl.querySelector('.fc-event-title-container').appendChild(imagesContainer);
 				var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 				var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
 				  return new bootstrap.Tooltip(tooltipTriggerEl);
 				});
 			  }
 			});
-		
+
 			calendar.render();
-		});			
+		});
 	}
-  
+
 	// Toggle Password
 	if ($('.toggle-password').length > 0) {
 		$(document).on('click', '.toggle-password', function () {
 		  const $icon = $(this).find('i');
 		  const $input = $(this).closest('.input-group').find('.pass-input');
-	  
+
 		  if ($input.attr('type') === 'password') {
 			$input.attr('type', 'text');
 			$icon.removeClass('ti-eye-off').addClass('ti-eye');
@@ -1728,7 +1723,7 @@ if (images.length > 2) {
 		});
 	}
 
-	
+
 
 	if ($('.timepicker').length > 0) {
 		$('.timepicker').datetimepicker({
@@ -1762,9 +1757,9 @@ if (images.length > 2) {
 		// Add new medication input on '+' click
 	$(document).on('click', '.add-medication', function (e) {
 		e.preventDefault();
-	
+
 		const newComplaint = `
-		
+
 		 <div class="row medication-list-item">
 			<div class="col-xl-3 col-md-6">
 			<div class="mb-3">
@@ -1801,7 +1796,7 @@ if (images.length > 2) {
 				<div class="mb-3">
 					<label class="form-label mb-1 text-dark fs-14 fw-medium"></label>
 					<a href="#" class="remove-medication ms-2 p-2 bg-light text-danger rounded d-flex align-items-center justify-content-center"><i class="ti ti-trash fs-16"></i></a>
-			    </div> 
+			    </div>
 			</div>
 			<div class="col-md-12">
 				<div class="mb-3 border-bottom pb-2">
@@ -1818,8 +1813,8 @@ if (images.length > 2) {
 						<label class="form-check-label form-label mb-0" for="customCheck7">Documents If any</label>
 					</div>
 				</div>
-			</div>			                                                
-		</div>	
+			</div>
+		</div>
 		`;
 
 		setTimeout(function () {
@@ -1888,11 +1883,11 @@ setTimeout(function () {
 		flatpickr(el, config);
 	});
 }, 100);
-	
+
 		// Insert before the add button row
 		$(this).closest('.medication-list-item').before(newComplaint);
 	});
-	
+
 	// Remove invest input on trash icon click
 	$(document).on('click', '.remove-medication', function (e) {
 		e.preventDefault();
@@ -1954,10 +1949,10 @@ setTimeout(function () {
 	}
 
 	// Select Table Checkbox
-	
+
 	var selectAllItems = "#select-all";
 	var checkboxItem = ".form-check.form-check-md :checkbox";
-	$(selectAllItems).on('click', function(){	
+	$(selectAllItems).on('click', function(){
 		if (this.checked) {
 		$(checkboxItem).each(function() {
 			this.checked = true;
@@ -1967,11 +1962,11 @@ setTimeout(function () {
 			this.checked = false;
 		});
 		}
-		
+
 	});
 	var selectAllItems = "#select-all-2";
 	var checkboxItem = ".form-check.form-check-md :checkbox";
-	$(selectAllItems).on('click', function(){	
+	$(selectAllItems).on('click', function(){
 		if (this.checked) {
 		$(checkboxItem).each(function() {
 			this.checked = true;
@@ -1981,12 +1976,12 @@ setTimeout(function () {
 			this.checked = false;
 		});
 		}
-		
+
 	});
 
 	var selectAllItems = "#select-all-3";
 	var checkboxItem = ".form-check.form-check-md :checkbox";
-	$(selectAllItems).on('click', function(){	
+	$(selectAllItems).on('click', function(){
 		if (this.checked) {
 		$(checkboxItem).each(function() {
 			this.checked = true;
@@ -1996,7 +1991,7 @@ setTimeout(function () {
 			this.checked = false;
 		});
 		}
-		
+
 	});
 
 	// full screen
@@ -2020,19 +2015,19 @@ setTimeout(function () {
 				}
 			}
 		}
-	} 
+	}
 
 	// hide show
 	$(document).ready(function() {
 		// Hide on page load
 		$(".hours-rate-main").hide();
-	
+
 		if ($('.hours-rate-btn').length > 0) {
 		$(".hours-rate-btn").on("click", function() {
 			$(".hours-rate-main").show(); // Show the section
 			$(this).addClass("hours-rate-btn-close");
 		});
-	
+
 		$(".reset-promote").on("click", function() {
 			$(".hours-rate-main").hide(); // Hide on reset
 			$(".hours-rate-btn").removeClass("hours-rate-btn-close");
@@ -2044,7 +2039,7 @@ setTimeout(function () {
 
 	if($('.play-icon').length > 0) {
 		$(".play-icon").on("click", function () {
-			$(this).toggleClass("pause bg-warning"); 
+			$(this).toggleClass("pause bg-warning");
 			$(this).find("i").toggleClass("ti-player-play-filled ti-player-stop-filled");
 		});
 	}
@@ -2053,19 +2048,19 @@ setTimeout(function () {
 		var $card = $(this);
 		var $selectAll = $card.find('.selectall'); // your select all checkbox
 		var $checkboxes = $card.find('.form-check.form-check-md :checkbox').not($selectAll);
-	
+
 		$selectAll.on('click', function () {
 			$checkboxes.prop('checked', this.checked);
 		});
 	});
 
-	// Aprrearence Settings 
+	// Aprrearence Settings
 	$('.theme-image').on('click', function(){
 		$('.theme-image').removeClass('active');
 		$(this).addClass('active');
 	});
 
-	// Add More rows 
+	// Add More rows
 	document.addEventListener('DOMContentLoaded', () => {
 		const tableBody = document.querySelector('#item-table tbody');
 		const addButton = document.getElementById('add-item-btn');
@@ -2160,15 +2155,15 @@ setTimeout(function () {
 			],
 			caption : function( instance, item ) {
 				var caption = $(this).data('caption') || '';
-		
+
 				return `
 					${caption.length ? caption + '<br />' : ''}
 			<div class="screenshot-info-top bg-dark position-fixed top-0 start-0 p-2 w-100">
-				<div class="d-flex align-items-center justify-content-center">				
+				<div class="d-flex align-items-center justify-content-center">
 					<a href="employee-details.html" class="avatar avatar-sm me-2 flex-shrink-0 avatar-rounded">
 						<img src="assets/img/users/user-04.jpg" class="img-fluid" alt="img">
 					</a>
-					<span class="text-white">Ashley Regan -  24 Jan 2025, 09:01:00 AM</span>							
+					<span class="text-white">Ashley Regan -  24 Jan 2025, 09:01:00 AM</span>
 				</div>
 			 </div>
 			<div class="screenshot-info-bottom text-center bg-dark position-fixed bottom-0 start-0 p-2 w-100">
@@ -2197,7 +2192,7 @@ setTimeout(function () {
 											<span>Keystroke / Min</span>
 										</div>
 										<span>69</span>
-									</div>									
+									</div>
 									<div class="progress-stacked progress-xs w-100">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
@@ -2211,12 +2206,12 @@ setTimeout(function () {
 											<span>Mouse Moments / Min</span>
 										</div>
 										<span>169</span>
-									</div>									
+									</div>
 									<div class="progress-stacked progress-xs w-100">
 										<div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 									</div>
 								</div>
-							</div>				
+							</div>
 						</div>
 					</div>
 			   </div>
@@ -2269,35 +2264,35 @@ setTimeout(function () {
 	});
 
 	// Otp Verfication  
-	$('.digit-group').find('input').each(function () { 
-		$(this).attr('maxlength', 1); 
-		$(this).on('keyup', function (e) { 
-			var parent = $($(this).parent()); 
-			if (e.keyCode === 8 || e.keyCode === 37) { 
-			var prev = parent.find('input#' + $(this).data('previous')); 
+	$('.digit-group').find('input').each(function () {
+		$(this).attr('maxlength', 1);
+		$(this).on('keyup', function (e) {
+			var parent = $($(this).parent());
+			if (e.keyCode === 8 || e.keyCode === 37) {
+			var prev = parent.find('input#' + $(this).data('previous'));
 		if (prev.length) {
-			$(prev).select(); 
-		} 
-		} 
+			$(prev).select();
+		}
+		}
 		else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {  
-			var next = parent.find('input#' + $(this).data('next')); 
-			if (next.length) { 
-				$(next).select(); 
-				} else { 
-				if (parent.data('autosubmit')) { 
-					parent.submit(); 
+			var next = parent.find('input#' + $(this).data('next'));
+			if (next.length) {
+				$(next).select();
+				} else {
+				if (parent.data('autosubmit')) {
+					parent.submit();
 				}
-			} 
-		} 
-		}); 
-	}); 
-	$('.digit-group input').on('keyup', function () { 
-		var self = $(this); 
-		if (self.val() != '') { 
-		self.addClass('active'); 
-		} else { 
-		self.removeClass('active'); 
-		} 
+			}
+		}
+		});
+	});
+	$('.digit-group input').on('keyup', function () {
+		var self = $(this);
+		if (self.val() != '') {
+		self.addClass('active');
+		} else {
+		self.removeClass('active');
+		}
 	});
 
 	// Coming Soon
@@ -2351,7 +2346,7 @@ setTimeout(function () {
 	// Add new invoice input on '+' click
 	$(document).on('click', '.add-invoices', function (e) {
 		e.preventDefault();
-	
+
 		const newInvoice = `
 			<tr class="invoices-list-item">
 				<td><input type="text" class="form-control" /></td>
@@ -2364,14 +2359,14 @@ setTimeout(function () {
 				</button></td>
 			</tr>
 		`;
-	
+
 		// Insert before the last row (the add button row)
 		$('.invoices-list tr:last').before(newInvoice);
 	});
 	// Add new invoice input on '+' click
 	$(document).on('click', '.add-invoices-two', function (e) {
 		e.preventDefault();
-	
+
 		const newInvoice = `
 			<tr class="invoices-list-item">
 				<td>
@@ -2409,7 +2404,7 @@ setTimeout(function () {
 				</td>
 			</tr>
 		`;
-	
+
 		// Insert before the last row (the add button row)
 		$('.invoices-list-two tr:last').after(newInvoice);
 
@@ -2426,7 +2421,7 @@ setTimeout(function () {
 	// Add new invoice input on '+' click
 	$(document).on('click', '.add-invoices-3', function (e) {
 		e.preventDefault();
-	
+
 		const newInvoice = `
 			<tr class="invoices-list-item">
 				<td>
@@ -2464,7 +2459,7 @@ setTimeout(function () {
 				</td>
 			</tr>
 		`;
-	
+
 		// Insert before the last row (the add button row)
 		$('.invoices-list-3 tr:last').after(newInvoice);
 
@@ -2478,12 +2473,12 @@ setTimeout(function () {
             }, 100);
         }, 100);
 	});
-	
+
 	// Remove Invoices input on trash icon click
 	$(document).on('click', '.remove-invoices', function (e) {
 		e.preventDefault();
 		$(this).closest('.invoices-list-item').remove();
-	});  
+	});
 
 	$('.theme-image').on('click', function(){
 		$('.theme-image').removeClass('active');
@@ -2529,9 +2524,9 @@ setTimeout(function () {
 				'</div>' +
 			'</div>' +
 			'<div class="col-md-6">' +
-				'<div class="d-flex align-items-center mb-3">' +    
-					'<div class="form-wrap w-100 me-3">' +    
-					'<input class="form-control" type="text" placeholder="Email Address">' +    
+				'<div class="d-flex align-items-center mb-3">' +
+					'<div class="form-wrap w-100 me-3">' +
+					'<input class="form-control" type="text" placeholder="Email Address">' +
 					'</div>' +
 					'<div class="input-btn">' +
 						'<a href="javascript:void(0);" class="trash-sign"><i class="ti ti-trash"></i></a>' +

@@ -3,11 +3,11 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Http\Request;
 
 class ContactMail extends Mailable
 {
@@ -26,7 +26,7 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Contact Form Submission: ' . $this->request->subject,
+            subject: 'New Contact Form Submission: '.$this->request->subject,
         );
     }
 

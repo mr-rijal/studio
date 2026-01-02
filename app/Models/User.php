@@ -14,7 +14,7 @@ use MrThito\LaravelStripeConnect\Traits\Payable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, Payable, SoftDeletes, HasCompany;
+    use HasCompany, HasFactory, Notifiable, Payable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

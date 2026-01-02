@@ -18,24 +18,28 @@ class HomePageController extends Controller
     public function about()
     {
         $page = Page::where('slug', 'about')->published()->firstOrFail();
+
         return view('page', compact('page'));
     }
 
     public function terms()
     {
         $page = Page::where('slug', 'terms')->published()->firstOrFail();
+
         return view('page', compact('page'));
     }
 
     public function privacyPolicy()
     {
         $page = Page::where('slug', 'privacy-policy')->published()->firstOrFail();
+
         return view('page', compact('page'));
     }
 
     public function page($slug)
     {
         $page = Page::where('slug', $slug)->published()->firstOrFail();
+
         return view('page', compact('page'));
     }
 

@@ -28,6 +28,7 @@ class VerifyLoginOtpController extends Controller
 
         if (! $user) {
             $request->session()->forget('login.user_id');
+
             return redirect()->route('login')->with('error', __('User not found.'));
         }
 
@@ -55,6 +56,7 @@ class VerifyLoginOtpController extends Controller
 
         if (! $user) {
             $request->session()->forget('login.user_id');
+
             return redirect()->route('login')->with('error', __('User not found.'));
         }
 
@@ -101,6 +103,7 @@ class VerifyLoginOtpController extends Controller
 
         if (! $user) {
             $request->session()->forget('login.user_id');
+
             return redirect()->route('login')->with('error', __('User not found.'));
         }
 

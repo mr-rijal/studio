@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\HomePageController;
 use App\Http\Middleware\IdentifyCompanyMiddleware;

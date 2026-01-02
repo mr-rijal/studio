@@ -22,6 +22,7 @@ class GuestLayout extends Component
             'web' => view('layouts.guest', compact('title')),
             'superadmin' => view('superadmin.layouts.guest', compact('title')),
             'landing' => view('layouts.landing', compact('title', 'sticky')),
+            'auth' => view('layouts.auth', compact('title')),
             default => view('layouts.guest', compact('title')),
         };
     }

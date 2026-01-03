@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Tenant\BranchController;
+use App\Http\Controllers\Tenant\CategoryController;
 use App\Http\Controllers\Tenant\DashboardController;
+use App\Http\Controllers\Tenant\FamilyAddressController;
 use App\Http\Controllers\Tenant\HomePageController;
+use App\Http\Controllers\Tenant\PolicyController;
 use App\Http\Middleware\IdentifyCompanyMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +24,22 @@ Route::middleware([
             Route::get('/', 'edit')->name('edit');
             Route::put('/', 'update')->name('update');
         });
+
+        // Category Routes
+        Route::post('categories/bulk-delete', [CategoryController::class, 'bulkDestroy'])->name('categories.bulk-destroy');
+        Route::resource('categories', CategoryController::class);
+
+        // Policy Routes
+        Route::post('policies/bulk-delete', [PolicyController::class, 'bulkDestroy'])->name('policies.bulk-destroy');
+        Route::resource('policies', PolicyController::class);
+
+        // Branch Routes
+        Route::post('branches/bulk-delete', [BranchController::class, 'bulkDestroy'])->name('branches.bulk-destroy');
+        Route::resource('branches', BranchController::class);
+
+        // Family Address Routes
+        Route::post('family-addresses/bulk-delete', [FamilyAddressController::class, 'bulkDestroy'])->name('family-addresses.bulk-destroy');
+        Route::resource('family-addresses', FamilyAddressController::class);
     });
 });
 

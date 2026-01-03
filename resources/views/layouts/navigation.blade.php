@@ -199,8 +199,8 @@
                                 <span>{{ __('General Settings') }}</span>
                             </a>
                         </li>
-                        <li {{ request()->routeIs('profile.edit') ? 'active' : '' }}>
-                            <a href="">
+                        <li {{ request()->routeIs('categories.*') ? 'active' : '' }}>
+                            <a href="{{ route('categories.index', absolute: false) }}">
                                 <i class="ti ti-tag"></i>
                                 <span>{{ __('Categories') }}</span>
                             </a>
@@ -223,25 +223,25 @@
                                 <span>{{ __('Registration Fee') }}</span>
                             </a>
                         </li>
-                        <li {{ request()->routeIs('profile.edit') ? 'active' : '' }}>
+                        <li {{ request()->routeIs('payment-settings.*') ? 'active' : '' }}>
                             <a href="">
                                 <i class="ti ti-credit-card"></i>
                                 <span>{{ __('Payment Settings') }}</span>
                             </a>
                         </li>
-                        <li {{ request()->routeIs('profile.edit') ? 'active' : '' }}>
-                            <a href="">
+                        <li {{ request()->routeIs('policies.*') ? 'active' : '' }}>
+                            <a href="{{ route('policies.index', absolute: false) }}">
                                 <i class="ti ti-file-description"></i>
                                 <span>{{ __('Policies') }}</span>
                             </a>
                         </li>
-                        <li {{ request()->routeIs('profile.edit') ? 'active' : '' }}>
-                            <a href="">
+                        <li {{ request()->routeIs('branches.*') ? 'active' : '' }}>
+                            <a href="{{ route('branches.index', absolute: false) }}">
                                 <i class="ti ti-building-community"></i>
                                 <span>{{ __('Branches') }}</span>
                             </a>
                         </li>
-                        <li {{ request()->routeIs('profile.edit') ? 'active' : '' }}>
+                        <li {{ request()->routeIs('email-settings.*') ? 'active' : '' }}>
                             <a href="">
                                 <i class="ti ti-mail"></i>
                                 <span>{{ __('Email Settings') }}</span>

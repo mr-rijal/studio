@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Tenant\DashboardController;
 use App\Http\Controllers\Tenant\HomePageController;
 use App\Http\Middleware\IdentifyCompanyMiddleware;
@@ -13,6 +14,12 @@ Route::middleware([
     // Dashboard and CRM Routes
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Profile Routes
+        Route::prefix('profile')->name('profile.')->controller(ProfileController::class)->group(function () {
+            Route::get('/', 'edit')->name('edit');
+            Route::put('/', 'update')->name('update');
+        });
     });
 });
 

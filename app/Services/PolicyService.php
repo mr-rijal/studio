@@ -45,7 +45,7 @@ class PolicyService
     public function create(array $data): Policy
     {
         // Ensure status is set
-        if (!isset($data['status'])) {
+        if (! isset($data['status'])) {
             $data['status'] = true;
         }
 

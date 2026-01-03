@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }

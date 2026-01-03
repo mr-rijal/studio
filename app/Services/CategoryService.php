@@ -45,7 +45,7 @@ class CategoryService
     public function create(array $data): Category
     {
         // Ensure status is set
-        if (!isset($data['status'])) {
+        if (! isset($data['status'])) {
             $data['status'] = true;
         }
 

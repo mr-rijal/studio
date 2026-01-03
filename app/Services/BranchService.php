@@ -48,7 +48,7 @@ class BranchService
     public function create(array $data): Branch
     {
         // Ensure status is set
-        if (!isset($data['status'])) {
+        if (! isset($data['status'])) {
             $data['status'] = true;
         }
 
